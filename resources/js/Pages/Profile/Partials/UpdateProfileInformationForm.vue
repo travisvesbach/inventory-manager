@@ -9,6 +9,10 @@ import JetInputError from '@/Jetstream/InputError.vue';
 import JetLabel from '@/Jetstream/Label.vue';
 import JetActionMessage from '@/Jetstream/ActionMessage.vue';
 import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import InputSelect from '@/Components/InputSelect.vue';
+import Accordion from '@/Components/Accordion.vue';
+import AccordionItem from '@/Components/AccordionItem.vue';
+import Card from '@/Components/Card.vue';
 
 const props = defineProps({
     user: Object,
@@ -18,6 +22,7 @@ const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
+    theme: props.user.theme,
     photo: null,
 });
 
@@ -171,6 +176,12 @@ const clearPhotoFileInput = () => {
                         A new verification link has been sent to your email address.
                     </div>
                 </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="theme" value="Theme" />
+                <InputSelect id="theme" class="mt-1 block w-full" v-model="form.theme" :options="['light', 'dark']" />
+                <JetInputError :message="form.errors.theme" class="mt-2" />
             </div>
         </template>
 
