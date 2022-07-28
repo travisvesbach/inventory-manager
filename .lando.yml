@@ -8,6 +8,8 @@ services:
     type: php:8.1
   node:
     type: node:16
+    ports:
+      - 5173:5173
     build:
       - npm install
   phpmyadmin:
