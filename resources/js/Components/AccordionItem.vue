@@ -1,6 +1,6 @@
 <script setup>
-    import TransitionExpand from '@/Components/TransitionExpand.vue'
     import { ref, inject, computed } from 'vue'
+    import TransitionExpand from '@/Components/TransitionExpand.vue'
 
     const props = defineProps({
         id: String,
@@ -40,7 +40,7 @@
 </script>
 
 <template>
-    <div class="accordion-item">
+    <div class="accordion-item overflow-x-hidden">
         <button class="btn-text flex items-center" :class="buttonClasses" @click="toggle(!show)">
             <slot name="title"></slot>
             <svg xmlns="https://www.w3.org/2000/svg" class="transform ease-in duration-200" :class="iconClasses" fill="none" viewBox="0 0 24 24" stroke="currentColor">

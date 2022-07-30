@@ -1,6 +1,9 @@
 <script setup>
+    import { inject} from 'vue'
     import AccordionItem from '@/Components/AccordionItem.vue';
     import SidebarDivider from '@/Components/SidebarDivider.vue';
+
+    const showingLeftSidebar = inject('showingLeftSidebar')
 
     const props = defineProps({
         id: String,
@@ -20,7 +23,7 @@
                 <div class="ml-1">
                     <i :class="props.icon + ' h-6 w-6 text-lg'"></i>
                 </div>
-                <span class="pl-1 opacity-0 whitespace-nowrap group-hover:opacity-100 transition-all duration-500">{{ props.title }}</span>
+                <span class="pl-1 opacity-0 whitespace-nowrap group-hover:opacity-100 transition-all duration-500" :class="{'opacity-100': showingLeftSidebar, 'opacity-0': ! showingLeftSidebar}">{{ props.title }}</span>
             </div>
         </template>
         <SidebarDivider/>
