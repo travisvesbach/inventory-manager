@@ -2,22 +2,24 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Category;
 
 class CategoriesTest extends TestCase
 {
-    use WithFaker, RefreshDatabase;
-
     /** @test **/
-    public function guests_cannot_manage_dice_tables() {
+    public function guests_cannot_manage_categories() {
         $category = Category::factory()->create();
 
         $this->get(route('categories.index'))->assertRedirect('login');
         $this->get(route('categories.create'))->assertRedirect('login');
         $this->get(route('categories.show', $category->id))->assertRedirect('login');
         $this->post(route('categories.store'), $category->toArray())->assertRedirect('login');
+
+        $category = Category::factory()->create();
+
+        $this->delete($category->path())
+            ->assertRedirect(route('login'));
     }
 
     /** @test **/
@@ -25,65 +27,60 @@ class CategoriesTest extends TestCase
         $this->signIn();
 
         $this->get(route('categories.create'))->assertStatus(200);
-
         $attributes = Category::factory()->raw();
-
         $response = $this->post(route('categories.store'), $attributes);
-
         $category = Category::where('name', $attributes['name'])->first();
 
         $response->assertRedirect($category->path());
 
         $this->assertDatabaseHas('categories', ['name' => $attributes['name']]);
-
         $this->get($category->path())
             ->assertSee($attributes['name']);
     }
 
     /** @test **/
-    public function an_authenticated_user_can_update_categories() {
-        // $this->withoutExceptionHandling();
+    public function a_user_can_update_categories() {
+        $this->signIn();
+
         $category = Category::factory()->create();
 
         $attributes = Category::factory()->raw();
         $attributes['name'] = 'changed';
 
-        // var_dump($category->path());
-
-        $this->actingAs($category->user)
-            ->patch($category->path(), $attributes)
+        $this->patch($category->path(), $attributes)
             ->assertRedirect($category->path());
 
         $this->assertDatabaseHas('categories', ['name' => 'changed']);
     }
 
     /** @test **/
-    public function a_user_can_view_their_dice_table() {
-        $dice_table = DiceTable::factory()->create();
+    public function a_user_can_view_categories() {
+        $this->signIn();
 
-        $this->actingAs($dice_table->user)
-            ->get($dice_table->path())
-            ->assertSee($dice_table->name);
+        $category = Category::factory()->create();
+        $this->get($category->path())
+            ->assertSee($category->name);
     }
 
     /** @test **/
-    public function unathorized_users_cannot_delete_dice_tables() {
-        $dice_table = DiceTable::factory()->create();
-
-        $this->delete($dice_table->path())
-            ->assertRedirect(route('login'));
-
+    public function a_user_can_delete_categories() {
         $this->signIn();
 
-        $this->delete($dice_table->path())->assertStatus(403);
+        $category = Category::factory()->create();
+
+        $this->delete($category->path())
+            ->assertStatus(302)
+            ->assertRedirect(route('categories.index'),);
+
+        $this->assertSoftDeleted($category);
     }
 
     /** @test **/
-    public function a_dice_table_requires_a_name() {
+    public function a_category_requires_a_name() {
         $this->signIn();
 
-        $attributes = DiceTable::factory()->raw(['name' => '']);
+        $attributes = Category::factory()->raw(['name' => '']);
 
-        $this->post(route('dice_tables.store'), $attributes)->assertSessionHasErrors('name');
+        $this->post(route('categories.store'), $attributes)->assertSessionHasErrors('name');
     }
 }
