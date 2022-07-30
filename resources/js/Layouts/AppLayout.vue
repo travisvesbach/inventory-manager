@@ -12,6 +12,7 @@ import Accordion from '@/Components/Accordion.vue';
 import AccordionItem from '@/Components/AccordionItem.vue';
 import SidebarLink from '@/Components/SidebarLink.vue';
 import SidebarAccordionItem from '@/Components/SidebarAccordionItem.vue';
+import SidebarDivider from '@/Components/SidebarDivider.vue';
 
 defineProps({
     title: String,
@@ -36,93 +37,33 @@ const logout = () => {
     <div class="flex">
         <div class="w-[50px] hover:w-[300px] bg-gray-800 text-gray-400 p-2 transition-all duration-500 group">
             <!-- Logo -->
-            <div class="flex mb-1 items-end">
+            <div class="flex mb-2 items-end">
                 <Link :href="route('dashboard')">
                     <JetApplicationMark class="block h-8 w-8" />
                 </Link>
                 <span class="pl-2 opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap font-bold text-lg">Zasset</span>
             </div>
-            <div class="border-t border-gray-400 my-1"/>
+            <SidebarDivider/>
 
-            <SidebarLink :href="route('dashboard')" text="Item 1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-            </SidebarLink>
+            <SidebarLink :href="route('dashboard')" text="Item 1" icon="fa-solid fa-car-side"/>
 
             <Accordion>
-                <SidebarAccordionItem id="electronics" title="Electronics">
-                    <template #icon>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </template>
-                    <SidebarLink text="All Electronics">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </SidebarLink>
+                <SidebarAccordionItem id="electronics" title="Electronics" icon="fa-solid fa-bolt">
+                    <SidebarLink :href="route('dashboard')" text="All Electronics"/>
                     <Accordion>
-                       <SidebarAccordionItem id="camera" title="Camera">
-                            <template #icon>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </template>
-                            <SidebarLink :href="route('dashboard')" text="All Camera">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </SidebarLink>
-                            <SidebarLink :href="route('dashboard')" text="Bodies">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </SidebarLink>
-                            <SidebarLink :href="route('dashboard')" text="Filters">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </SidebarLink>
-                            <SidebarLink :href="route('dashboard')" text="Lenses">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </SidebarLink>
+                        <SidebarAccordionItem id="camera" title="Camera" icon="fa-solid fa-camera">
+                            <SidebarLink :href="route('dashboard')" text="All Camera" icon="fa-solid fa-camera" class="active"/>
+                            <SidebarLink :href="route('dashboard')" text="Bodies" icon="fa-solid fa-camera"/>
+                            <SidebarLink :href="route('dashboard')" text="Filters" icon="fa-solid fa-circle-half-stroke"/>
+                            <SidebarLink :href="route('dashboard')" text="Lenses" icon="fa-solid fa-camera-retro"/>
                         </SidebarAccordionItem>
                     </Accordion>
-                    <SidebarLink :href="route('dashboard')" text="Computer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </SidebarLink>
+                    <SidebarLink :href="route('dashboard')" text="Computer" icon="fa-solid fa-computer"/>
                 </SidebarAccordionItem>
-                <SidebarAccordionItem id="firearms" title="Firearms">
-                    <template #icon>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </template>
-                    <SidebarLink :href="route('dashboard')" text="All Firearms">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </SidebarLink>
-                    <SidebarLink :href="route('dashboard')" text="Ammo">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </SidebarLink>
-                    <SidebarLink :href="route('dashboard')" text="Optics">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </SidebarLink>
+                <SidebarAccordionItem id="firearms" title="Firearms" icon="fa-solid fa-gun">
+                    <SidebarLink :href="route('dashboard')" text="All Firearms" icon="fa-solid fa-gun"/>
+                    <SidebarLink :href="route('dashboard')" text="Ammo" icon="fa-solid fa-gun"/>
+                    <SidebarLink :href="route('dashboard')" text="Optics" icon="fa-solid fa-crosshairs"/>
                 </SidebarAccordionItem>
             </Accordion>
         </div>

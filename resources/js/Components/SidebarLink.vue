@@ -4,13 +4,17 @@
     const props = defineProps({
         href: String,
         text: String,
+        icon: {
+            type: String,
+            default: 'fa-regular fa-circle',
+        }
     })
 </script>
 
 <template>
     <Link :href="props.href" class="flex py-1 rounded-lg hover:bg-gray-700">
-        <div class="ml-1">
-            <slot></slot>
+        <div class="ml-2">
+            <i :class="props.icon + ' h-6 w-6 text-lg'"></i>
         </div>
         <span class="pl-1 opacity-0 whitespace-nowrap group-hover:opacity-100 transition-all duration-500">{{ props.text }}</span>
     </Link>
