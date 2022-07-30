@@ -18,7 +18,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="accordion">
         <slot></slot>
     </div>
 </template>

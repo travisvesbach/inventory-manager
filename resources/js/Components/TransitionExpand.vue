@@ -1,27 +1,34 @@
 <script setup>
     function onEnter(element, done) {
-        const { height } = getComputedStyle(element);
+        console.log('onEnter')
+        const height = getComputedStyle(element).height;
         element.style.height = 0;
-        getComputedStyle(element).height;
+        // getComputedStyle(element).height;
         setTimeout(() => {
             element.style.height = height;
         });
+        setTimeout(() => {
+            done()
+        }, 300)
 
         // call the done callback to indicate transition end
         // optional if used in combination with CSS
-        // done()
 
     }
 
     function onAfterEnter(element) {
+        console.log('here')
+        element.style.minHeight = element.style.height;
         element.style.height = 'auto';
     }
 
     function onLeave(element, done) {
-        const { height } = getComputedStyle(element);
+        console.log('onleave')
+        const height = getComputedStyle(element).height;
         element.style.height = height;
-        getComputedStyle(element).height;
+        // getComputedStyle(element).height;
         setTimeout(() => {
+            element.style.minHeight = 0;
             element.style.height = 0;
         });
 
@@ -47,7 +54,7 @@
 
     .expand-enter-from,
     .expand-leave-to {
-        opacity: 0;
+        /*opacity: 0;*/
     }
 
 </style>

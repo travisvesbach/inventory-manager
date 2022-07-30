@@ -7,6 +7,8 @@
         justify: String,
         icon_size: String,
         button_width: String,
+        button_classes: String,
+        button_weight: String,
     })
 
     const setActive = inject('setActive')
@@ -21,7 +23,7 @@
     })
 
     const buttonClasses = computed(() => {
-        let classes = '';
+        let classes = props.button_classes + ' ';
         classes += (props.button_width ?? 'w-full')
         classes += '  justify' + (props.justify ?? '-between')
         return classes;
@@ -40,16 +42,14 @@
 <template>
     <div class="accordion-item">
         <button class="btn-text flex items-center" :class="buttonClasses" @click="toggle(!show)">
-            <strong>
-                <slot name="title"></slot>
-            </strong>
+            <slot name="title"></slot>
             <svg xmlns="https://www.w3.org/2000/svg" class="transform ease-in duration-200" :class="iconClasses" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
         <TransitionExpand>
-            <div class="accorion-item-content" v-if="show">
-                <slot name="content"></slot>
+            <div class="accorion-item-content h-auto" v-if="show">
+                <slot></slot>
             </div>
         </TransitionExpand>
     </div>
