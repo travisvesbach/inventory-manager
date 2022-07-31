@@ -13,6 +13,8 @@ class CategoriesController extends Controller
     public function index() {
         $categories = Category::orderBy('name')->get();
 
+        // dd($categories);
+
         return Inertia::render('Categories/Index', compact(['categories']));
     }
 

@@ -17,6 +17,10 @@ class Category extends Model
         'icon',
     ];
 
+    protected $appends = [
+        'path',
+    ];
+
     public function path() {
         return route('categories.show', $this->id);
     }

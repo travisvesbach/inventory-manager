@@ -69,10 +69,13 @@ provide('showingLeftSidebar', showingLeftSidebar);
                     <SidebarLink :href="route('dashboard')" text="Ammo" icon="fa-solid fa-gun"/>
                     <SidebarLink :href="route('dashboard')" text="Optics" icon="fa-solid fa-crosshairs"/>
                 </SidebarAccordionItem>
+                <SidebarAccordionItem id="firearms" title="Settings" icon="fa-solid fa-gear">
+                    <SidebarLink :href="route('categories.index')" text="Categories" icon="fa-solid fa-object-group"/>
+                </SidebarAccordionItem>
             </Accordion>
         </div>
 
-        <div>
+        <div class="w-full">
 
             <Head :title="title" />
 
