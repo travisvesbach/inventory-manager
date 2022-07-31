@@ -22,8 +22,9 @@
                     },
                     {
                         key: 'parent',
+                        subkey: 'name',
                         label: 'Parent',
-                        format: 'link',
+                        format: 'obj_link',
                     },
                     {
                         key: 'icon',

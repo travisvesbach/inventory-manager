@@ -41,26 +41,40 @@
         }
 
         let sort = (sort_key.value ?? props.headers[0].key);
+        let sort_subkey = (props.headers.find(obj => obj.key === sort).subkey ?? false)
         if(!sort_reverse.value) {
             filtered.sort(function(a, b) {
-                if(isNaN(a[sort]) && isNaN(b[sort])) {
-                    return a[sort].localeCompare(b[sort]);
+                let a_sort = (a[sort] != null && sort_subkey ? a[sort][sort_subkey] : a[sort]);
+                let b_sort = (b[sort] != null && sort_subkey ? b[sort][sort_subkey] : b[sort]);
+                if(a_sort == null) {
+                    return 1
+                } else if(a_sort == null && b_sort == null) {
+                    return 0
+                } else if(b_sort == null) {
+                    return -1
+                } else if(isNaN(a_sort) && isNaN(b_sort)) {
+                    return a_sort.localeCompare(b_sort);
                 } else {
-                    return a[sort] - b[sort];
+                    return a_sort - b_sort;
                 }
-
             });
         } else {
             filtered.sort(function(a, b) {
-                if(isNaN(a[sort]) && isNaN(b[sort])) {
-                    return b[sort].localeCompare(a[sort]);
+                let a_sort = (a[sort] != null && sort_subkey ? a[sort][sort_subkey] : a[sort]);
+                let b_sort = (b[sort] != null && sort_subkey ? b[sort][sort_subkey] : b[sort]);
+                if(a_sort == null) {
+                    return -1
+                } else if(a_sort == null && b_sort == null) {
+                    return 0
+                } else if(b_sort == null) {
+                    return +1
+                } else if(isNaN(a_sort) && isNaN(b_sort)) {
+                    return b_sort.localeCompare(a_sort);
                 } else {
-                    return b[sort] - a[sort];
+                    return b_sort - a_sort;
                 }
-
             });
         }
-        console.log(filtered);
         return filtered;
     })
 
@@ -93,9 +107,23 @@
         <tbody>
             <tr class="border-b-2 border-color hover-trigger" v-for="item in filtered">
                 <td class="py-2 px-1" v-for="header in props.headers">
-                    <Link :href="item.path" class="text-lg link-color" v-html="highlight(item[header.key])" v-if="item[header.key] && header.format == 'link'"/>
-                    <i :class="item[header.key]" v-else-if="header.format == 'icon' && item[header.key]"/>
-                    <span class="text-lg link-color" v-html="highlight(item[header.key])" v-else/>
+                    <!-- link -->
+                    <Link :href="item.path"
+                        class="text-lg link-color"
+                        v-html="highlight(item[header.key])"
+                        v-if="header.format == 'link' && item[header.key]"/>
+                    <!-- obj_link -->
+                    <Link :href="item[header.key].path"
+                        class="text-lg link-color"
+                        v-html="highlight(item[header.key][header.subkey])"
+                        v-else-if="header.format == 'obj_link' &&item[header.key] && item[header.key][header.subkey]"/>
+                    <!-- icon -->
+                    <i :class="item[header.key]"
+                        v-else-if="header.format == 'icon' && item[header.key]"/>
+                    <!-- text -->
+                    <span class="text-lg link-color"
+                        v-html="highlight(item[header.key])"
+                        v-else/>
                 </td>
                 <td class="py-2 px-1" v-if="props.actions">
                     <!-- dropdown -->

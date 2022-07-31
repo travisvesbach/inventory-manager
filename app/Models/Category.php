@@ -28,4 +28,12 @@ class Category extends Model
     public function getPathAttribute() {
         return $this->path();
     }
+
+    public function parent() {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function subcategories() {
+        return $this->hasMnay(Category::class, 'parent_id');
+    }
 }

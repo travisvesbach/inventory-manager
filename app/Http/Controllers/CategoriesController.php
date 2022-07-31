@@ -11,9 +11,7 @@ use App\Http\Requests\CategoryRequest;
 class CategoriesController extends Controller
 {
     public function index() {
-        $categories = Category::orderBy('name')->get();
-
-        // dd($categories);
+        $categories = Category::orderBy('name')->with('parent')->get();
 
         return Inertia::render('Categories/Index', compact(['categories']));
     }
