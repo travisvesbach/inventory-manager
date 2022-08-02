@@ -11,13 +11,13 @@ use App\Http\Requests\CategoryRequest;
 class CategoriesController extends Controller
 {
     public function index() {
-        $categories = Category::orderBy('name')->with('parent')->get();
-
+        $categories = Category::orderBy('name')->with('category')->get();
         return Inertia::render('Categories/Index', compact(['categories']));
     }
 
     public function create() {
-        return Inertia::render('Categories/Edit');
+        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
+        return Inertia::render('Categories/Edit', compact(['categories']));
     }
 
     public function store(CategoryRequest $request) {
@@ -33,10 +33,12 @@ class CategoriesController extends Controller
     }
 
     public function edit(Category $category) {
-        return Inertia::render('Categories/Edit', ['editing' => $category]);
+        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
+        return Inertia::render('Categories/Edit', ['editing' => $category, 'categories' => $categories]);
     }
 
     public function update(CategoryRequest $request, Category $category) {
+        // dd($request->validated());
         $category->update($request->validated());
         $category->save();
 

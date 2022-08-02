@@ -231,7 +231,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
                 </header>
 
                 <!-- Page Content -->
-                <main>
+                <main class="mt-10">
                     <slot />
                 </main>
             </div>

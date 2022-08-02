@@ -19,7 +19,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->string('name');
-            $table->foreignId('parent_id')->nullable()->default(null);
+            $table->foreignId('category_id')->nullable()->default(null);
             $table->string('icon')->nullable()->default(null);
         });
     }

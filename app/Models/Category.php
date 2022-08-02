@@ -13,7 +13,7 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'parent_id',
+        'category_id',
         'icon',
     ];
 
@@ -29,11 +29,11 @@ class Category extends Model
         return $this->path();
     }
 
-    public function parent() {
-        return $this->belongsTo(Category::class, 'parent_id');
+    public function category() {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subcategories() {
-        return $this->hasMnay(Category::class, 'parent_id');
+        return $this->hasMnay(Category::class, 'category_id');
     }
 }

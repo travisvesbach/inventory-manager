@@ -21,9 +21,9 @@
                         format: 'link',
                     },
                     {
-                        key: 'parent',
+                        key: 'category',
                         subkey: 'name',
-                        label: 'Parent',
+                        label: 'Category',
                         format: 'obj_link',
                     },
                     {
