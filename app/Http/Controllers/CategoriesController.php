@@ -29,6 +29,7 @@ class CategoriesController extends Controller
     }
 
     public function show(Category $category) {
+        $category->load('category');
         return Inertia::render('Categories/Show', compact(['category']));
     }
 
