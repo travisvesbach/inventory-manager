@@ -6,7 +6,7 @@ import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOther
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
-import PageHeader from '@/Components/PageHeader.vue';
+import PageHeading from '@/Components/PageHeading.vue';
 import PageContent from '@/Components/PageContent.vue';
 
 defineProps({
@@ -18,9 +18,9 @@ defineProps({
 <template>
     <AppLayout title="Profile">
         <template #header>
-            <PageHeader>
+            <PageHeading>
                 Profile
-            </PageHeader>
+            </PageHeading>
         </template>
 
         <PageContent>

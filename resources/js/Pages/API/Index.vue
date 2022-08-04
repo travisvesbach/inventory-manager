@@ -1,7 +1,7 @@
 <script setup>
 import ApiTokenManager from '@/Pages/API/Partials/ApiTokenManager.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import PageHeader from '@/Components/PageHeader.vue';
+import PageHeading from '@/Components/PageHeading.vue';
 import PageContent from '@/Components/PageContent.vue';
 
 defineProps({
@@ -14,9 +14,9 @@ defineProps({
 <template>
     <AppLayout title="API Tokens">
         <template #header>
-            <PageHeader>
+            <PageHeading>
                 API Tokens
-            </PageHeader>
+            </PageHeading>
         </template>
 
         <PageContent>

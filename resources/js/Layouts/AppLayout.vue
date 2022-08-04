@@ -121,11 +121,13 @@ provide('showingLeftSidebar', showingLeftSidebar);
                                         />
                                     </svg>
                                 </button>
+
+                                <!-- Page Heading -->
+                                <div v-if="$slots.header">
+                                    <slot name="header" />
+                                </div>
                             </div>
 
-                            <h2 class="font-semibold text-xl ml-5 flex items-center">
-                                <slot name="header" />
-                            </h2>
 
                             <div class="hidden sm:flex sm:items-center sm:ml-6">
                                 <!-- Settings Dropdown -->
@@ -234,13 +236,6 @@ provide('showingLeftSidebar', showingLeftSidebar);
                         </div>
                     </div>
                 </nav>
-
-                <!-- Page Heading -->
-                <header v-if="$slots.header" class="bg-white shadow dark:bg-black">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 heading-color">
-                        <slot name="header" />
-                    </div>
-                </header>
 
                 <!-- Page Content -->
                 <main class="mt-10">

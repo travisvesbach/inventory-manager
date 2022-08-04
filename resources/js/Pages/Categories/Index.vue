@@ -1,16 +1,16 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Table from '@/Components/Table.vue';
-    import PageHeader from '@/Components/PageHeader.vue';
+    import PageHeading from '@/Components/PageHeading.vue';
     import PageContent from '@/Components/PageContent.vue';
 </script>
 
 <template>
     <AppLayout title="Categories">
         <template #header>
-            <PageHeader>
+            <PageHeading>
                 Categories
-            </PageHeader>
+            </PageHeading>
         </template>
 
         <PageContent>

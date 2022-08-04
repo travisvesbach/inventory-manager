@@ -4,7 +4,7 @@
     import Form from '@/Components/Form.vue'
     import InputText from '@/Components/InputText.vue'
     import InputSelect from '@/Components/InputSelect.vue'
-    import PageHeader from '@/Components/PageHeader.vue';
+    import PageHeading from '@/Components/PageHeading.vue';
     import PageContent from '@/Components/PageContent.vue';
 
     const props = defineProps({
@@ -34,9 +34,9 @@
 <template>
     <AppLayout :title="editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category'">
         <template #header>
-            <PageHeader>
+            <PageHeading>
                 {{ editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category' }}
-            </PageHeader>
+            </PageHeading>
         </template>
 
         <PageContent>
