@@ -29,7 +29,7 @@ class CategoriesController extends Controller
     }
 
     public function show(Category $category) {
-        return Inertia::render('Category/Show', compact(['category']));
+        return Inertia::render('Categories/Show', compact(['category']));
     }
 
     public function edit(Category $category) {

@@ -15,6 +15,8 @@ import SidebarAccordionItem from '@/Components/SidebarAccordionItem.vue';
 import SidebarDivider from '@/Components/SidebarDivider.vue';
 import DropdownDivider from '@/Components/DropdownDivider.vue';
 import DropdownHeader from '@/Components/DropdownHeader.vue';
+import PageHeading from '@/Components/PageHeading.vue';
+import PageContent from '@/Components/PageContent.vue';
 
 defineProps({
     title: String,
@@ -123,8 +125,10 @@ provide('showingLeftSidebar', showingLeftSidebar);
                                 </button>
 
                                 <!-- Page Heading -->
-                                <div v-if="$slots.header">
-                                    <slot name="header" />
+                                <div v-if="title">
+                                    <PageHeading>
+                                        {{ title }}
+                                    </PageHeading>
                                 </div>
                             </div>
 
@@ -239,7 +243,9 @@ provide('showingLeftSidebar', showingLeftSidebar);
 
                 <!-- Page Content -->
                 <main class="mt-10">
-                    <slot />
+                    <PageContent>
+                        <slot />
+                    </PageContent>
                 </main>
             </div>
         </div>
