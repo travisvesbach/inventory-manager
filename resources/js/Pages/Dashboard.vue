@@ -1,22 +1,22 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
+import PageHeader from '@/Components/PageHeader.vue';
+import PageContent from '@/Components/PageContent.vue';
 </script>
 
 <template>
     <AppLayout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <PageHeader>
                 Dashboard
-            </h2>
+            </PageHeader>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome />
-                </div>
+        <PageContent>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <Welcome />
             </div>
-        </div>
+        </PageContent>
     </AppLayout>
 </template>

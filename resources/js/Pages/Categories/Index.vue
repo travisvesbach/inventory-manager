@@ -1,18 +1,19 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Table from '@/Components/Table.vue';
-
+    import PageHeader from '@/Components/PageHeader.vue';
+    import PageContent from '@/Components/PageContent.vue';
 </script>
 
 <template>
     <AppLayout title="Categories">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <PageHeader>
                 Categories
-            </h2>
+            </PageHeader>
         </template>
 
-        <div>
+        <PageContent>
             <Table
                 :headers="[
                     {
@@ -36,7 +37,7 @@
                 :actions="['edit', 'delete']"
                 route_slug="categories"
             />
-        </div>
+        </PageContent>
     </AppLayout>
 
 </template>

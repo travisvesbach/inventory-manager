@@ -99,18 +99,20 @@ const closeModal = () => {
             </template>
 
             <template #footer>
-                <JetSecondaryButton @click="closeModal">
-                    Cancel
-                </JetSecondaryButton>
+                <div class="flex justify-between w-full">
+                    <JetSecondaryButton @click="closeModal">
+                        Cancel
+                    </JetSecondaryButton>
 
-                <JetButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="confirmPassword"
-                >
-                    {{ button }}
-                </JetButton>
+                    <JetButton
+                        class="ml-3"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        @click="confirmPassword"
+                    >
+                        {{ button }}
+                    </JetButton>
+                </div>
             </template>
         </JetDialogModal>
     </span>

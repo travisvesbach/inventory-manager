@@ -1,5 +1,6 @@
 <script setup>
 import Modal from './Modal.vue';
+import Card from '@/Components/Card.vue';
 
 const emit = defineEmits(['close']);
 
@@ -30,18 +31,16 @@ const close = () => {
         :closeable="closeable"
         @close="close"
     >
-        <div class="px-6 py-4">
-            <div class="text-lg">
+        <Card>
+            <template #header>
                 <slot name="title" />
-            </div>
+            </template>
 
-            <div class="mt-4">
-                <slot name="content" />
-            </div>
-        </div>
+            <slot name="content" />
 
-        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right">
-            <slot name="footer" />
-        </div>
+            <template #footer>
+                <slot name="footer" />
+            </template>
+        </Card>
     </Modal>
 </template>

@@ -49,7 +49,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
 </script>
 
 <template>
-    <div class="flex" :class="themeClass">
+    <div id="layout" class="flex" :class="themeClass">
         <div class="w-[50px] hover:w-[300px] bg-gray-800 text-gray-400 px-2 transition-all duration-500 group" :class="{'w-[300px]': showingLeftSidebar, 'w-[50px]': ! showingLeftSidebar}">
             <!-- Logo -->
             <div class="flex my-2 items-end">
@@ -123,6 +123,10 @@ provide('showingLeftSidebar', showingLeftSidebar);
                                     </svg>
                                 </button>
                             </div>
+
+                            <h2 class="font-semibold text-xl ml-5 flex items-center">
+                                <slot name="header" />
+                            </h2>
 
                             <div class="hidden sm:flex sm:items-center sm:ml-6">
                                 <!-- Settings Dropdown -->
@@ -234,7 +238,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
 
                 <!-- Page Heading -->
                 <header v-if="$slots.header" class="bg-white shadow dark:bg-black">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 heading-color">
                         <slot name="header" />
                     </div>
                 </header>
@@ -247,11 +251,3 @@ provide('showingLeftSidebar', showingLeftSidebar);
         </div>
     </div>
 </template>
-
-<style>
-    #checkbox:checked + label .switch-ball{
-      background-color: white;
-      transform: translateX(24px);
-      transition: transform 0.3s linear;
-    }
-</style>

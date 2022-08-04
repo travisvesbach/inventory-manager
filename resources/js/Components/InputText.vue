@@ -33,7 +33,7 @@
 
 </script>
 <template>
-    <div class="col-span-6 sm:col-span-4">
+    <div class="col-span-6 sm:col-span-4 mt-4">
         <JetLabel :for="props.id" :value="props.label" />
         <JetInput :id="props.id"
             class="mt-1 block w-full"

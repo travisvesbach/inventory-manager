@@ -4,6 +4,8 @@
     import Form from '@/Components/Form.vue'
     import InputText from '@/Components/InputText.vue'
     import InputSelect from '@/Components/InputSelect.vue'
+    import PageHeader from '@/Components/PageHeader.vue';
+    import PageContent from '@/Components/PageContent.vue';
 
     const props = defineProps({
         editing: {
@@ -32,16 +34,18 @@
 <template>
     <AppLayout :title="editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category'">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <PageHeader>
                 {{ editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category' }}
-            </h2>
+            </PageHeader>
         </template>
 
-        <Form :form="form" @submitted="submit">
-            <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
-            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="props.categories" option_value="id" option_label="name" :disabled="props.categories.length == 0 ? true : false" />
-            <InputText id="icon" label="Icon" v-model="form.icon" :error="form.errors.icon"/>
-        </Form>
+        <PageContent>
+            <Form :form="form" @submitted="submit">
+                <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
+                <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="props.categories" option_value="id" option_label="name" :disabled="props.categories.length == 0 ? true : false" />
+                <InputText id="icon" label="Icon" v-model="form.icon" :error="form.errors.icon"/>
+            </Form>
+        </PageContent>
     </AppLayout>
 
 </template>

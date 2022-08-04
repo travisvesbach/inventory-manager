@@ -56,10 +56,10 @@
 </script>
 
 <template>
-    <div class="col-span-6 sm:col-span-4">
+    <div class="col-span-6 sm:col-span-4 mt-4">
         <JetLabel :for="props.id" :value="props.label" />
         <select :id="props.id"
-            class="form-input"
+            class="form-input w-full"
             :value="modelValue"
             @input="updateValue" :disabled="props.disabled">
             <option v-for="option in options" :value="optionContents(option, props.option_value)">{{ optionContents(option, props.option_label) }}</option>

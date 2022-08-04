@@ -18,8 +18,12 @@
 </script>
 
 <template>
-    <form @submit.prevent="$emit('submitted')" class="w-full mx-auto py-10" :class="widthClass">
+    <form @submit.prevent="$emit('submitted')" class="w-full mx-auto ty-10" :class="widthClass">
         <card>
+            <template #header v-if="$slots.header">
+                <slot name="header"></slot>
+            </template>
+            <slot name="description"></slot>
             <slot></slot>
             <template #footer>
                 <div class="w-full flex justify-end">

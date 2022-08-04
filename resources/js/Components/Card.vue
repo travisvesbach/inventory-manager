@@ -8,7 +8,7 @@
             <slot></slot>
         </div>
 
-        <div class="p-3 flex items-center card-header-footer" v-if="$slots.footer">
+        <div class="p-3 flex items-center card-header-footer" v-if="$slots.footer || $slots.footerend">
             <slot name="footer"></slot>
             <div class="flex flex-grow items-center justify-end">
                 <slot name="footerend"></slot>

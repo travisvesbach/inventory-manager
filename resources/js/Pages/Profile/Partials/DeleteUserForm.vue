@@ -7,6 +7,7 @@ import JetDangerButton from '@/Jetstream/DangerButton.vue';
 import JetInput from '@/Jetstream/Input.vue';
 import JetInputError from '@/Jetstream/InputError.vue';
 import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import Card from '@/Components/Card.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -38,50 +39,50 @@ const closeModal = () => {
 </script>
 
 <template>
-    <JetActionSection>
-        <template #title>
+    <Card>
+        <template #header>
             Delete Account
         </template>
 
-        <template #description>
+        <div>
             Permanently delete your account.
+        </div>
+
+        <div class="max-w-xl text-sm mt-5 text-secondary-color">
+            Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+        </div>
+
+        <template #footerend>
+            <JetDangerButton @click="confirmUserDeletion">
+                Delete Account
+            </JetDangerButton>
         </template>
 
-        <template #content>
-            <div class="max-w-xl text-sm text-gray-600">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
-            </div>
+        <!-- Delete Account Confirmation Modal -->
+        <JetDialogModal :show="confirmingUserDeletion" @close="closeModal">
+            <template #title>
+                Delete Account
+            </template>
 
-            <div class="mt-5">
-                <JetDangerButton @click="confirmUserDeletion">
-                    Delete Account
-                </JetDangerButton>
-            </div>
+            <template #content>
+                Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
 
-            <!-- Delete Account Confirmation Modal -->
-            <JetDialogModal :show="confirmingUserDeletion" @close="closeModal">
-                <template #title>
-                    Delete Account
-                </template>
+                <div class="mt-4">
+                    <JetInput
+                        ref="passwordInput"
+                        v-model="form.password"
+                        type="password"
+                        class="mt-1 block w-3/4"
+                        placeholder="Password"
+                        @keyup.enter="deleteUser"
+                    />
 
-                <template #content>
-                    Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                    <JetInputError :message="form.errors.password" class="mt-2" />
+                </div>
+            </template>
 
-                    <div class="mt-4">
-                        <JetInput
-                            ref="passwordInput"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-3/4"
-                            placeholder="Password"
-                            @keyup.enter="deleteUser"
-                        />
-
-                        <JetInputError :message="form.errors.password" class="mt-2" />
-                    </div>
-                </template>
-
-                <template #footer>
+            <template #footer>
+                <div class="flex justify-between w-full">
                     <JetSecondaryButton @click="closeModal">
                         Cancel
                     </JetSecondaryButton>
@@ -94,8 +95,8 @@ const closeModal = () => {
                     >
                         Delete Account
                     </JetDangerButton>
-                </template>
-            </JetDialogModal>
-        </template>
-    </JetActionSection>
+                </div>
+            </template>
+        </JetDialogModal>
+    </Card>
 </template>
