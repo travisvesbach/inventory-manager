@@ -41,6 +41,10 @@ const close = () => {
             <template #footer>
                 <slot name="footer" />
             </template>
+
+            <template #footerend>
+                <slot name="footerend" />
+            </template>
         </Card>
     </Modal>
 </template>

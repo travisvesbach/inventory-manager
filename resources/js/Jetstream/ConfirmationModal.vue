@@ -1,5 +1,6 @@
 <script setup>
 import Modal from './Modal.vue';
+import Card from '@/Components/Card.vue';
 
 const emit = defineEmits(['close']);
 
@@ -30,7 +31,11 @@ const close = () => {
         :closeable="closeable"
         @close="close"
     >
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <Card>
+            <template #header>
+                <slot name="title" />
+            </template>
+
             <div class="sm:flex sm:items-start">
                 <div class="mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                     <svg
@@ -47,21 +52,18 @@ const close = () => {
                         />
                     </svg>
                 </div>
-
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg">
-                        <slot name="title" />
-                    </h3>
-
-                    <div class="mt-2">
-                        <slot name="content" />
-                    </div>
+                <div class="ml-2">
+                    <slot name="content" />
                 </div>
             </div>
-        </div>
 
-        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right">
-            <slot name="footer" />
-        </div>
+            <template #footer>
+                <slot name="footer" />
+            </template>
+
+            <template #footerend>
+                <slot name="footerend" />
+            </template>
+        </Card>
     </Modal>
 </template>
