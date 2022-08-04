@@ -1,9 +1,23 @@
 <script setup>
-defineProps({
+import { computed } from 'vue';
+
+const props = defineProps({
     type: {
         type: String,
         default: 'button',
     },
+    size: {
+        type: String,
+        default: 'md',
+    }
+});
+
+const sizeClass = computed(() => {
+    return {
+        'xs': 'btn-xs',
+        'sm': 'btn-sm',
+        'md': '',
+    }[props.size]
 });
 </script>
 

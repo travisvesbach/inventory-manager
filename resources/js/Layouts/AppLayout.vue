@@ -1,7 +1,8 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide, computed } from 'vue'
 import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/inertia-vue3';
 import JetApplicationMark from '@/Jetstream/ApplicationMark.vue';
 import JetBanner from '@/Jetstream/Banner.vue';
 import JetDropdown from '@/Jetstream/Dropdown.vue';
@@ -13,6 +14,8 @@ import AccordionItem from '@/Components/AccordionItem.vue';
 import SidebarLink from '@/Components/SidebarLink.vue';
 import SidebarAccordionItem from '@/Components/SidebarAccordionItem.vue';
 import SidebarDivider from '@/Components/SidebarDivider.vue';
+import DropdownDivider from '@/Components/DropdownDivider.vue';
+import DropdownHeader from '@/Components/DropdownHeader.vue';
 
 defineProps({
     title: String,
@@ -34,11 +37,19 @@ const logout = () => {
     Inertia.post(route('logout'));
 };
 
+const themeClass = computed(() => {
+    let theme = usePage().props.value.user ? usePage().props.value.user.theme : null;
+    if((theme == 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || theme == 'dark') {
+        return 'dark';
+    }
+    return 'light';
+})
+
 provide('showingLeftSidebar', showingLeftSidebar);
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex" :class="themeClass">
         <div class="w-[50px] hover:w-[300px] bg-gray-800 text-gray-400 px-2 transition-all duration-500 group" :class="{'w-[300px]': showingLeftSidebar, 'w-[50px]': ! showingLeftSidebar}">
             <!-- Logo -->
             <div class="flex my-2 items-end">
@@ -75,14 +86,14 @@ provide('showingLeftSidebar', showingLeftSidebar);
             </Accordion>
         </div>
 
-        <div class="w-full">
+        <div class="w-full text-color">
 
             <Head :title="title" />
 
             <JetBanner />
 
-            <div class="min-h-screen bg-gray-100">
-                <nav class="bg-white border-b border-gray-100">
+            <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+                <nav class="bg-white border-b border-gray-100 dark:bg-black dark:border-gray-900">
                     <!-- Primary Navigation Menu -->
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex justify-between h-12">
@@ -118,12 +129,12 @@ provide('showingLeftSidebar', showingLeftSidebar);
                                 <div class="ml-3 relative">
                                     <JetDropdown align="right" width="48">
                                         <template #trigger>
-                                            <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex flex link link-color">
                                                 <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
                                             </button>
 
                                             <span v-else class="inline-flex rounded-md">
-                                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                                <button type="button" class="flex link link-color">
                                                     {{ $page.props.user.name }}
 
                                                     <svg
@@ -140,9 +151,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
 
                                         <template #content>
                                             <!-- Account Management -->
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                                Manage Account
-                                            </div>
+                                            <DropdownHeader>Manage Account</DropdownHeader>
 
                                             <JetDropdownLink :href="route('profile.show')">
                                                 Profile
@@ -152,7 +161,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
                                                 API Tokens
                                             </JetDropdownLink>
 
-                                            <div class="border-t border-gray-100" />
+                                            <DropdownDivider />
 
                                             <!-- Authentication -->
                                             <form @submit.prevent="logout">
@@ -224,7 +233,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
                 </nav>
 
                 <!-- Page Heading -->
-                <header v-if="$slots.header" class="bg-white shadow">
+                <header v-if="$slots.header" class="bg-white shadow dark:bg-black">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         <slot name="header" />
                     </div>
@@ -238,3 +247,11 @@ provide('showingLeftSidebar', showingLeftSidebar);
         </div>
     </div>
 </template>
+
+<style>
+    #checkbox:checked + label .switch-ball{
+      background-color: white;
+      transform: translateX(24px);
+      transition: transform 0.3s linear;
+    }
+</style>

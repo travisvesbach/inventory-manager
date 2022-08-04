@@ -59,7 +59,7 @@
     <div class="col-span-6 sm:col-span-4">
         <JetLabel :for="props.id" :value="props.label" />
         <select :id="props.id"
-            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full form-input"
+            class="form-input"
             :value="modelValue"
             @input="updateValue" :disabled="props.disabled">
             <option v-for="option in options" :value="optionContents(option, props.option_value)">{{ optionContents(option, props.option_label) }}</option>

@@ -178,11 +178,26 @@ const clearPhotoFileInput = () => {
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="theme" value="Theme" />
-                <InputSelect id="theme" class="mt-1 block w-full" v-model="form.theme" :options="['light', 'dark']" />
-                <JetInputError :message="form.errors.theme" class="mt-2" />
-            </div>
+            <InputSelect id="category_id"
+                label="Theme"
+                v-model="form.theme"
+                :error="form.errors.theme"
+                :options="[
+                    {
+                        value: 'system',
+                        label: 'System Preference'
+                    },
+                    {
+                        value: 'light',
+                        label: 'Light'
+                    },
+                    {
+                        value: 'dark',
+                        label: 'Dark'
+                    }
+                ]"
+                option_value="value"
+                option_label="label"/>
         </template>
 
         <template #actions>

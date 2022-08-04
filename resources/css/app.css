@@ -1,3 +1,116 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.link {
+    @apply items-center text-sm font-medium focus:outline-none transition duration-150 ease-in-out;
+}
+
+.link-color {
+    @apply text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300;
+    @apply dark:text-yellow-600 dark:hover:text-yellow-500 dark:focus:text-yellow-500;
+}
+
+.nav-link {
+    @apply inline-flex items-center ml-3 px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition h-full;
+}
+
+.nav-link-inactive {
+    @apply border-transparent dark:hover:border-yellow-500 dark:focus:border-yellow-500;
+}
+
+.nav-link-active {
+    @apply border-indigo-400 text-gray-900 focus:border-indigo-700 dark:text-yellow-500 dark:border-yellow-500 dark:focus:border-yellow-500;
+}
+
+.text-color {
+    @apply text-gray-600;
+    @apply dark:text-gray-300;
+}
+
+.text-secondary-color {
+    @apply text-gray-500;
+    @apply dark:text-gray-400;
+}
+
+.heading-color {
+    @apply text-gray-900;
+    @apply dark:text-yellow-500;
+}
+
+.form-input, .vs__selected, .vs__search, .vs__actions, .vs__dropdown-menu, .vs__dropdown-option {
+    @apply rounded-md shadow-sm focus:ring focus:ring-opacity-50;
+    @apply border-gray-300 focus:border-indigo-300 focus:ring-indigo-200;
+    @apply dark:bg-gray-600 dark:border-gray-800 dark:placeholder-gray-400 dark:focus:ring-yellow-600;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input[type=checkbox] {
+    @apply h-5 w-5 cursor-pointer dark:text-yellow-500 dark:hover:text-yellow-500 dark:hover:bg-yellow-500;
+}
+
+.card {
+    @apply bg-white;
+    @apply dark:bg-gray-700;
+}
+
+.card-header-footer {
+    @apply p-3 flex items-center;
+    @apply bg-gray-200;
+    @apply dark:bg-gray-800;
+}
+
+.border-color {
+    @apply border-gray-200;
+    @apply dark:border-gray-600;
+}
+
+.btn {
+    @apply inline-flex items-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25 transition;
+}
+
+.btn-xs {
+    @apply p-1;
+    font-size: 0.6rem;
+    line-height: .9;
+}
+
+.btn-sm {
+    @apply px-2 py-1;
+}
+
+.btn-primary {
+    @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-400;
+    @apply dark:bg-gray-300 dark:text-black dark:hover:bg-gray-200 dark:active:bg-gray-400 dark:focus:border-yellow-600 dark:focus:ring-yellow-600;
+}
+
+.btn-secondary {
+    @apply shadow-sm;
+    @apply bg-white border-gray-300 text-gray-700 hover:text-gray-500 focus:border-blue-300 focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 ;
+    @apply dark:bg-gray-600 dark:border-gray-600 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:border-yellow-600 dark:focus:ring-yellow-600 dark:active:text-gray-100 dark:active:bg-gray-900;
+}
+
+.btn-danger {
+    @apply justify-center;
+    @apply bg-red-600 border-transparent text-white hover:bg-red-500 focus:border-red-700 focus:ring-red-200 active:bg-red-600;
+    @apply dark:bg-red-700 dark:text-white dark:hover:bg-red-600 dark:focus:border-red-800 dark:focus:ring-red-800 dark:active:bg-red-700;
+}
+
+.btn-text {
+    @apply cursor-pointer;
+    @apply hover:text-gray-700;
+    @apply dark:hover:text-gray-100;
+}
+
+.btn-text:disabled, .btn-text[disabled] {
+    @apply cursor-default;
+    @apply hover:text-current;
+}
+
+.highlight {
+    @apply bg-blue-400;
+    @apply dark:bg-yellow-900;
+}
