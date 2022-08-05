@@ -54,13 +54,13 @@ input[type=checkbox] {
 
 .card {
     @apply bg-white drop-shadow-lg;
-    @apply dark:bg-zinc-800;
+    @apply dark:bg-zinc-800 border dark:border-zinc-800;
 }
 
 .card-header-footer {
     @apply p-3 flex items-center;
     @apply bg-gray-200;
-    @apply dark:bg-zinc-900 border dark:border-zinc-800;
+    @apply dark:bg-zinc-900;
 }
 
 .border-color {
@@ -84,7 +84,7 @@ input[type=checkbox] {
 
 .btn-primary {
     @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-400;
-    @apply dark:bg-gray-300 dark:text-black dark:hover:bg-gray-200 dark:active:bg-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400;
+    @apply dark:bg-purple-300 dark:text-black dark:hover:bg-purple-400 dark:active:bg-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400;
 }
 
 .btn-secondary {

@@ -3,6 +3,8 @@
     import { Link } from '@inertiajs/inertia-vue3';
     import JetDropdown from '@/Jetstream/Dropdown.vue';
     import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
+    import JetInput from '@/Jetstream/Input.vue';
+    import JetButton from '@/Jetstream/Button.vue';
 
     const props = defineProps({
         headers: Object,
@@ -17,6 +19,8 @@
     const search = ref(null);
     const sort_key = ref(null);
     const sort_reverse = ref(false);
+    const page_number = ref(1);
+    const per_page = ref(3);
 
     const buttonClasses = computed(() => {
         let classes = props.button_classes + ' ';
@@ -25,18 +29,18 @@
         return classes;
     })
 
-
-
     const filtered = computed(() => {
         let filtered = props.data;
         if(search.value) {
             let searching = search.value.toLowerCase();
             filtered = filtered.filter(function(item) {
-                if (item.name.toLowerCase().includes(searching)) {
-                    return true;
-                } else {
-                    return false;
+                for(let header of props.headers) {
+                    let search_value = (header.subkey && item[header.key] ? item[header.key][header.subkey] : item[header.key]);
+                    if(search_value && search_value.toLowerCase().includes(searching)) {
+                        return true;
+                    }
                 }
+                return false;
             });
         }
 
@@ -78,6 +82,18 @@
         return filtered;
     })
 
+    const page_count = computed(() => {
+        if (filtered.value != null) {
+            return Math.ceil(filtered.value.length / per_page.value);
+        }
+    })
+
+    const pagianted_data = computed(() => {
+        let start = (page_number.value - 1) * per_page.value;
+        let end = start + per_page.value;
+        return filtered.value.slice(start, end);
+    })
+
     function highlight(content) {
         if(!content) {
             return '';
@@ -98,57 +114,81 @@
 </script>
 
 <template>
-    <table class="w-full">
-        <thead>
-            <tr class="border-b-2 border-color" v-if="props.headers">
-                <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="border-b-2 border-color hover-trigger" v-for="item in filtered">
-                <td class="py-2 px-1" v-for="header in props.headers">
-                    <!-- link -->
-                    <Link :href="item.path"
-                        class="text-lg link-color"
-                        v-html="highlight(item[header.key])"
-                        v-if="header.format == 'link' && item[header.key]"/>
-                    <!-- obj_link -->
-                    <Link :href="item[header.key].path"
-                        class="text-lg link-color"
-                        v-html="highlight(item[header.key][header.subkey])"
-                        v-else-if="header.format == 'obj_link' &&item[header.key] && item[header.key][header.subkey]"/>
-                    <!-- icon -->
-                    <i :class="item[header.key]"
-                        v-else-if="header.format == 'icon' && item[header.key]"/>
-                    <!-- text -->
-                    <span class="text-lg link-color"
-                        v-html="highlight(item[header.key])"
-                        v-else/>
-                </td>
-                <td class="py-2 px-1" v-if="props.actions">
-                    <!-- dropdown -->
-                    <JetDropdown align="right" width="48" class="hover-target">
-                        <template #trigger>
-                            <button class="ml-auto flex link link-color">
-                                <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </template>
+    <div>
+        <div class="flex justify-between">
+            <div>
+                <slot></slot>
+            </div>
+            <JetInput class="p-1" type="text" v-model="search" placeholder="search"/>
+        </div>
+        <table class="w-full mt-2">
+            <thead>
+                <tr class="border-b-2 border-color" v-if="props.headers">
+                    <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b-2 border-color" v-for="item in pagianted_data">
+                    <td class="py-2 px-1" v-for="header in props.headers">
+                        <!-- link -->
+                        <Link :href="item.path"
+                            class="text-lg link-color"
+                            v-html="highlight(item[header.key])"
+                            v-if="header.format == 'link' && item[header.key]"/>
+                        <!-- obj_link -->
+                        <Link :href="item[header.key].path"
+                            class="text-lg link-color"
+                            v-html="highlight(item[header.key][header.subkey])"
+                            v-else-if="header.format == 'obj_link' &&item[header.key] && item[header.key][header.subkey]"/>
+                        <!-- icon -->
+                        <i :class="item[header.key]"
+                            v-else-if="header.format == 'icon' && item[header.key]"/>
+                        <!-- text -->
+                        <span class="text-lg link-color"
+                            v-html="highlight(item[header.key])"
+                            v-else/>
+                    </td>
+                    <td class="py-2 px-1" v-if="props.actions">
+                        <!-- dropdown -->
+                        <JetDropdown align="right" width="48">
+                            <template #trigger>
+                                <button class="ml-auto flex link link-color">
+                                    <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </template>
 
-                        <template #content>
-                            <div>
-                                <JetDropdownLink :href="route(props.route_slug + '.edit', item.id)" v-if="props.actions.includes('edit')">
-                                    Edit
-                                </JetDropdownLink>
-                                <JetDropdownLink :href="route(props.route_slug + '.destroy', item.id)" v-if="props.actions.includes('delete')">
-                                    Delete
-                                </JetDropdownLink>
-                            </div>
-                        </template>
-                    </JetDropdown>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                            <template #content>
+                                <div>
+                                    <JetDropdownLink :href="route(props.route_slug + '.edit', item.id)" v-if="props.actions.includes('edit')">
+                                        Edit
+                                    </JetDropdownLink>
+                                    <JetDropdownLink :href="route(props.route_slug + '.destroy', item.id)" v-if="props.actions.includes('delete')">
+                                        Delete
+                                    </JetDropdownLink>
+                                </div>
+                            </template>
+                        </JetDropdown>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-5 flex justify-center">
+                <JetButton class="btn btn-sm btn-primary mx-3" @click="page_number--" :disabled="page_number == 1">Previous</JetButton>
+
+                <span class="link-color cursor-pointer mx-1" @click="page_number = 1" v-if="page_number != 1">1</span>
+                <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number - 3 > 1">...</span>
+                <span class="link-color cursor-pointer mx-1" @click="page_number = page_number - 2" v-if="page_number - 2 > 1">{{ page_number - 2 }}</span>
+                <span class="link-color cursor-pointer mx-1" @click="page_number = page_number - 1" v-if="page_number - 1 > 1">{{ page_number - 1 }}</span>
+                <span class="mx-1">{{ page_number }}</span>
+                <span class="link-color cursor-pointer mx-1" @click="page_number = page_number + 1" v-if="page_number + 1 < page_count">{{ page_number + 1 }}</span>
+                <span class="link-color cursor-pointer mx-1" @click="page_number = page_number + 2" v-if="page_number + 2 < page_count">{{ page_number + 2 }}</span>
+                <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number + 3 < page_count">...</span>
+                <span class="link-color cursor-pointer mx-1" @click="page_number = page_count" v-if="page_number < page_count">{{ page_count }}</span>
+
+                <JetButton class="btn btn-sm btn-primary mx-3" @click="page_number++" :disabled="page_number >= page_count || page_count <= 1">Next</JetButton>
+
+        </div>
+    </div>
 </template>
