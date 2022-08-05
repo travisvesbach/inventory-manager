@@ -53,7 +53,7 @@ input[type=checkbox] {
 }
 
 .card {
-    @apply bg-white;
+    @apply bg-white drop-shadow-lg;
     @apply dark:bg-gray-700;
 }
 

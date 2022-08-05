@@ -51,7 +51,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
 
 <template>
     <div id="layout" class="flex" :class="themeClass">
-        <div class="w-[50px] hover:w-[300px] bg-gray-800 text-gray-400 px-2 transition-all duration-500 group" :class="{'w-[300px]': showingLeftSidebar, 'w-[50px]': ! showingLeftSidebar}">
+        <div class="w-[50px] hover:w-[300px] bg-zinc-900 text-gray-400 px-2 transition-all duration-500 group" :class="{'w-[300px]': showingLeftSidebar, 'w-[50px]': ! showingLeftSidebar}">
             <!-- Logo -->
             <div class="flex my-2 items-end">
                 <Link :href="route('dashboard')">
@@ -94,7 +94,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
             <JetBanner />
 
             <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-                <nav class="bg-white border-b border-gray-100 dark:bg-black dark:border-gray-900">
+                <nav class="bg-white border-b border-gray-100 dark:bg-zinc-900 dark:border-gray-900">
                     <!-- Primary Navigation Menu -->
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex justify-between h-12">
