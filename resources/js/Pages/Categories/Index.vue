@@ -1,5 +1,6 @@
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
+    import Card from '@/Components/Card.vue';
     import Table from '@/Components/Table.vue';
 </script>
 

@@ -8,7 +8,7 @@
 
 .link-color {
     @apply text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300;
-    @apply dark:text-yellow-600 dark:hover:text-yellow-500 dark:focus:text-yellow-500;
+    @apply dark:text-purple-400 dark:hover:text-purple-600 dark:focus:text-purple-600;
 }
 
 .nav-link {
@@ -16,11 +16,11 @@
 }
 
 .nav-link-inactive {
-    @apply border-transparent dark:hover:border-yellow-500 dark:focus:border-yellow-500;
+    @apply border-transparent dark:hover:border-purple-600 dark:focus:border-purple-600;
 }
 
 .nav-link-active {
-    @apply border-indigo-400 text-gray-900 focus:border-indigo-700 dark:text-yellow-500 dark:border-yellow-500 dark:focus:border-yellow-500;
+    @apply border-indigo-400 text-gray-900 focus:border-indigo-700 dark:text-purple-600 dark:border-purple-600 dark:focus:border-purple-600;
 }
 
 .text-color {
@@ -35,13 +35,13 @@
 
 .heading-color {
     @apply text-gray-900;
-    @apply dark:text-yellow-500;
+    @apply dark:text-purple-600;
 }
 
 .form-input, .vs__selected, .vs__search, .vs__actions, .vs__dropdown-menu, .vs__dropdown-option {
     @apply rounded-md shadow-sm focus:ring focus:ring-opacity-50;
     @apply border-gray-300 focus:border-indigo-300 focus:ring-indigo-200;
-    @apply dark:bg-gray-600 dark:border-gray-800 dark:placeholder-gray-400 dark:focus:ring-yellow-600;
+    @apply dark:bg-zinc-700 dark:border-zinc-800 dark:placeholder-gray-400 dark:focus:ring-purple-400;
 }
 
 input[type=number] {
@@ -49,18 +49,18 @@ input[type=number] {
 }
 
 input[type=checkbox] {
-    @apply h-5 w-5 cursor-pointer dark:text-yellow-500 dark:hover:text-yellow-500 dark:hover:bg-yellow-500;
+    @apply h-5 w-5 cursor-pointer dark:text-purple-600 dark:hover:text-purple-600 dark:hover:bg-purple-600;
 }
 
 .card {
     @apply bg-white drop-shadow-lg;
-    @apply dark:bg-gray-700;
+    @apply dark:bg-zinc-800;
 }
 
 .card-header-footer {
     @apply p-3 flex items-center;
     @apply bg-gray-200;
-    @apply dark:bg-gray-800;
+    @apply dark:bg-zinc-900 border dark:border-zinc-800;
 }
 
 .border-color {
@@ -84,13 +84,13 @@ input[type=checkbox] {
 
 .btn-primary {
     @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-400;
-    @apply dark:bg-gray-300 dark:text-black dark:hover:bg-gray-200 dark:active:bg-gray-400 dark:focus:border-yellow-600 dark:focus:ring-yellow-600;
+    @apply dark:bg-gray-300 dark:text-black dark:hover:bg-gray-200 dark:active:bg-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400;
 }
 
 .btn-secondary {
     @apply shadow-sm;
     @apply bg-white border-gray-300 text-gray-700 hover:text-gray-500 focus:border-blue-300 focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 ;
-    @apply dark:bg-gray-600 dark:border-gray-600 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:border-yellow-600 dark:focus:ring-yellow-600 dark:active:text-gray-100 dark:active:bg-gray-900;
+    @apply dark:bg-gray-600 dark:border-gray-600 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400 dark:active:text-gray-100 dark:active:bg-gray-900;
 }
 
 .btn-danger {
@@ -112,5 +112,5 @@ input[type=checkbox] {
 
 .highlight {
     @apply bg-blue-400;
-    @apply dark:bg-yellow-900;
+    @apply dark:bg-purple-900;
 }
