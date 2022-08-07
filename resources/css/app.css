@@ -38,11 +38,36 @@
     @apply dark:text-purple-600;
 }
 
-.form-input, .vs__selected, .vs__search, .vs__actions, .vs__dropdown-menu, .vs__dropdown-option {
+.form-input {
     @apply rounded-md shadow-sm focus:ring focus:ring-opacity-50;
     @apply border-gray-300 focus:border-indigo-300 focus:ring-indigo-200;
     @apply dark:bg-zinc-700 dark:border-zinc-800 dark:placeholder-gray-400 dark:focus:ring-purple-400;
 }
+
+
+/* Start vue-select */
+.vs__selected-options {
+    @apply py-1 !important;
+}
+
+.vs__dropdown-toggle, .vs__dropdown-menu, .vs--open {
+    @apply rounded-md shadow-sm !important;
+    @apply border-gray-300 !important;
+    @apply dark:bg-zinc-700 dark:border-zinc-800 dark:placeholder-gray-400 !important;
+}
+
+.vs__selected, .vs__actions svg{
+    @apply text-gray-600 fill-gray-600 !important;
+    @apply dark:text-gray-300 dark:fill-gray-300 !important;
+}
+
+/* no focus state, so apply these classes when .vs--open is set  */
+.vs__dropdown-menu,.vs--open {
+    @apply rounded-md ring ring-opacity-50 !important;
+    @apply border-indigo-300 ring-indigo-200 border-gray-300 border-indigo-300 !important;
+    @apply dark:ring-purple-400 border-zinc-800 !important;
+}
+/* end vue-select */
 
 input[type=number] {
     -moz-appearance:textfield;

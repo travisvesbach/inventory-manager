@@ -2,6 +2,7 @@
     import JetLabel from '@/Jetstream/Label.vue';
     import JetInput from '@/Jetstream/Input.vue';
     import JetInputError from '@/Jetstream/InputError.vue';
+    import vSelect from 'vue-select';
 
     const props = defineProps({
         id: {
@@ -14,10 +15,6 @@
         },
         modelValue: {
             default: ''
-        },
-        type: {
-            type: String,
-            default: 'text'
         },
         error: {
             type: String,
@@ -35,6 +32,10 @@
         disabled: {
             type: Boolean,
             default: false,
+        },
+        clearable: {
+            type: Boolean,
+            default: true,
         }
     })
 
@@ -50,20 +51,24 @@
         return option;
     }
 
-    function updateValue(event) {
-        emit('update:modelValue', event.target.value);
+    function updateValue(value) {
+        console.log(value);
+        emit('update:modelValue', value);
     }
 </script>
 
 <template>
     <div class="col-span-6 sm:col-span-4 mt-4">
         <JetLabel :for="props.id" :value="props.label" />
-        <select :id="props.id"
-            class="form-input w-full"
-            :value="modelValue"
-            @input="updateValue" :disabled="props.disabled">
-            <option v-for="option in options" :value="optionContents(option, props.option_value)">{{ optionContents(option, props.option_label) }}</option>
-        </select>
+        <vSelect :id="props.id"
+            :options="props.options"
+            :label="props.option_label"
+            :reduce="(option) => option[props.option_value]"
+            v-model="modelValue"
+            v-on:update:modelValue="updateValue"
+            :disabled="props.disabled"
+            :clearable="props.clearable">
+        </vSelect>
         <JetInputError :message="props.error" class="mt-2" />
     </div>
 </template>

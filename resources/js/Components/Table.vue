@@ -108,7 +108,6 @@
 
     function sortBy(key) {
         sort_reverse.value = (sort_key.value == key ? ! sort_reverse.value : false);
-
         sort_key.value = key;
     }
 </script>

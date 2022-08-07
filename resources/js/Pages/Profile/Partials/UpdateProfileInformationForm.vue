@@ -172,6 +172,7 @@ const clearPhotoFileInput = () => {
                 }
             ]"
             option_value="value"
-            option_label="label"/>
+            option_label="label"
+            :clearable="false"/>
     </Form>
 </template>
