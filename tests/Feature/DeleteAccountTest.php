@@ -17,13 +17,15 @@ class DeleteAccountTest extends TestCase
             return $this->markTestSkipped('Account deletion is not enabled.');
         }
 
+        $this->withoutExceptionHandling();
+
         $this->actingAs($user = User::factory()->create());
 
         $response = $this->delete('/user', [
             'password' => 'password',
         ]);
 
-        $this->assertNull($user->fresh());
+        $this->assertSoftDeleted($user->fresh());
     }
 
     public function test_correct_password_must_be_provided_before_account_can_be_deleted()
