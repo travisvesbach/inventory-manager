@@ -115,6 +115,10 @@ dark_secondary_ring             - indigo-400
     @apply border-purple-200 ring-purple-200 !important;
     @apply dark:ring-purple-500 !important;
 }
+
+.vs--disabled .vs__clear, .vs--disabled .vs__dropdown-toggle, .vs--disabled .vs__open-indicator, .vs--disabled .vs__search, .vs--disabled .vs__selected {
+    @apply bg-zinc-900 !important;
+}
 /* end vue-select */
 
 input[type=number] {
