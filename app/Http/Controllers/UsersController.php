@@ -50,6 +50,11 @@ class UsersController extends Controller
         return redirect('/users')->with(['flash_message' => $user->name . ' created', 'flash_status' => 'success']);
     }
 
+    public function show(User $user) {
+        // use different variable so to not interfere with Inertia's $page.props.user varibale being the logged in user.
+        return Inertia::render('Users/Show', ['showing' => $user]);
+    }
+
     public function edit(User $user) {
         $this->authorize('manageUsers', User::class);
 

@@ -33,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'theme',
+        'admin',
     ];
 
     /**
@@ -63,6 +64,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'path',
     ];
 
     protected static function booted()
@@ -73,6 +75,14 @@ class User extends Authenticatable
                 $user->admin = true;
             }
         });
+    }
+
+    public function path() {
+        return route('users.show', $this->id);
+    }
+
+    public function getPathAttribute() {
+        return $this->path();
     }
 
     // override activity log to not include password

@@ -1,6 +1,6 @@
 <script setup>
     import { ref, computed } from 'vue'
-    import { Link } from '@inertiajs/inertia-vue3';
+    import { Link, useForm } from '@inertiajs/inertia-vue3';
     import JetDropdown from '@/Jetstream/Dropdown.vue';
     import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
     import JetInput from '@/Jetstream/Input.vue';
@@ -20,6 +20,8 @@
             default: true
         },
     })
+
+    const empty_char = '&#8212';
 
     const search = ref(null);
     const sort_key = ref(null);
@@ -41,6 +43,9 @@
             filtered = filtered.filter(function(item) {
                 for(let header of props.headers) {
                     let search_value = (header.subkey && item[header.key] ? item[header.key][header.subkey] : item[header.key]);
+                    if(header.format == 'boolean' && !isNaN(search_value)) {
+                        search_value = search_value ? (header.true_text ?? null) : (header.false_text ?? null);
+                    }
                     if(search_value && search_value.toLowerCase().includes(searching)) {
                         return true;
                     }
@@ -99,6 +104,14 @@
         return filtered.value.slice(start, end);
     })
 
+    function formatBoolean(input, header) {
+        return input ? (header.true_text ?? empty_char) : (header.false_text ?? empty_char);
+    }
+
+    function content(input) {
+        return highlight(input ?? empty_char);
+    }
+
     function highlight(content) {
         if(!content) {
             return '';
@@ -114,6 +127,14 @@
     function sortBy(key) {
         sort_reverse.value = (sort_key.value == key ? ! sort_reverse.value : false);
         sort_key.value = key;
+    }
+
+    function deleteItem(item) {
+        let form = useForm({
+            id: (item ? item.id : null),
+        });
+
+        form.delete(route(props.route_slug + '.destroy', item.id));
     }
 </script>
 
@@ -142,19 +163,23 @@
                         <!-- link -->
                         <Link :href="item.path"
                             class="text-lg link link-color"
-                            v-html="highlight(item[header.key])"
+                            v-html="content(item[header.key])"
                             v-if="header.format == 'link' && item[header.key]"/>
                         <!-- obj_link -->
                         <Link :href="item[header.key].path"
                             class="text-lg link link-color"
-                            v-html="highlight(item[header.key][header.subkey])"
-                            v-else-if="header.format == 'obj_link' &&item[header.key] && item[header.key][header.subkey]"/>
+                            v-html="content(item[header.key][header.subkey])"
+                            v-else-if="header.format == 'obj_link' && item[header.key] && item[header.key][header.subkey]"/>
                         <!-- icon -->
                         <i :class="item[header.key]"
                             v-else-if="header.format == 'icon' && item[header.key]"/>
+                        <!-- boolean -->
+                        <span class="text-lg"
+                            v-html="content(formatBoolean(item[header.key], header))"
+                            v-else-if="header.format == 'boolean'"/>
                         <!-- text -->
-                        <span class="text-lg link-color"
-                            v-html="highlight(item[header.key])"
+                        <span class="text-lg"
+                            v-html="content(item[header.key])"
                             v-else/>
                     </td>
                     <td class="py-2 px-1" v-if="props.actions">
@@ -173,7 +198,7 @@
                                     <JetDropdownLink :href="route(props.route_slug + '.edit', item.id)" v-if="props.actions.includes('edit')">
                                         Edit
                                     </JetDropdownLink>
-                                    <JetDropdownLink :href="route(props.route_slug + '.destroy', item.id)" v-if="props.actions.includes('delete')">
+                                    <JetDropdownLink @click="deleteItem(item)" v-if="props.actions.includes('delete') && $page.props.user.admin">
                                         Delete
                                     </JetDropdownLink>
                                 </div>
