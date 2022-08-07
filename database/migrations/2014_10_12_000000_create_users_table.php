@@ -25,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('theme')->nullable()->default('system');
+            $table->boolean('admin')->default(false);
         });
     }
 

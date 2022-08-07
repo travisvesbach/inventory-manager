@@ -65,6 +65,16 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            //if there aren't any users, this user is an admin
+            if(User::count() == 0) {
+                $user->admin = true;
+            }
+        });
+    }
+
     // override activity log to not include password
     public function getActivitylogOptions(): LogOptions
     {

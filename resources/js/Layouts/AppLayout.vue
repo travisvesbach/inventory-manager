@@ -83,6 +83,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
                 </SidebarAccordionItem>
                 <SidebarAccordionItem id="firearms" title="Settings" icon="fa-solid fa-gear">
                     <SidebarLink :href="route('categories.index')" text="Categories" icon="fa-solid fa-object-group"/>
+                    <SidebarLink :href="route('users.index')" text="Users" icon="fa-solid fa-user"/>
                 </SidebarAccordionItem>
             </Accordion>
         </div>
