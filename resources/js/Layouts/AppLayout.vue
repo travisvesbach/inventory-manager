@@ -96,7 +96,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
             <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
                 <nav class="bg-white border-b border-gray-100 dark:bg-zinc-900 dark:border-gray-900">
                     <!-- Primary Navigation Menu -->
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex justify-between h-12">
                             <!-- Hamburger for left sidebar -->
                             <div class="-mr-2 flex items-center">

@@ -29,7 +29,7 @@ class CategoriesController extends Controller
     }
 
     public function show(Category $category) {
-        $category->load('category');
+        $category->load(['category', 'subcategories']);
         return Inertia::render('Categories/Show', compact(['category']));
     }
 
@@ -39,7 +39,6 @@ class CategoriesController extends Controller
     }
 
     public function update(CategoryRequest $request, Category $category) {
-        // dd($request->validated());
         $category->update($request->validated());
         $category->save();
 

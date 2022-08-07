@@ -14,6 +14,10 @@
             default: null
         },
         route_slug: String,
+        search: {
+            type: Boolean,
+            default: true
+        },
     })
 
     const search = ref(null);
@@ -30,7 +34,7 @@
     })
 
     const filtered = computed(() => {
-        let filtered = props.data;
+        let filtered = props.data ?? [];
         if(search.value) {
             let searching = search.value.toLowerCase();
             filtered = filtered.filter(function(item) {
@@ -88,7 +92,7 @@
         }
     })
 
-    const pagianted_data = computed(() => {
+    const paginated_data = computed(() => {
         let start = (page_number.value - 1) * per_page.value;
         let end = start + per_page.value;
         return filtered.value.slice(start, end);
@@ -118,7 +122,7 @@
             <div>
                 <slot></slot>
             </div>
-            <JetInput class="p-1" type="text" v-model="search" placeholder="search"/>
+            <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="props.search"/>
         </div>
         <table class="w-full mt-2">
             <thead>
@@ -127,7 +131,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-b-2 border-color" v-for="item in pagianted_data">
+                <tr v-if="paginated_data.length == 0" class="text-center">
+                    <td colspan="100%">
+                        No results
+                    </td>
+                </tr>
+                <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
                     <td class="py-2 px-1" v-for="header in props.headers">
                         <!-- link -->
                         <Link :href="item.path"
@@ -173,7 +182,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="mt-5 flex justify-center">
+        <div class="mt-5 flex justify-center" v-if="page_count > 1">
                 <JetButton class="btn btn-sm btn-primary mx-3" @click="page_number--" :disabled="page_number == 1">Previous</JetButton>
 
                 <span class="link-color cursor-pointer mx-1" @click="page_number = 1" v-if="page_number != 1">1</span>
