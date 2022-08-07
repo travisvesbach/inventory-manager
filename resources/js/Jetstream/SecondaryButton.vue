@@ -22,7 +22,7 @@ const sizeClass = computed(() => {
 </script>
 
 <template>
-    <button :type="type" class="btn btn-danger" :class="sizeClass">
+    <button :type="type" class="btn btn-secondary" :class="sizeClass">
         <slot />
     </button>
 </template>

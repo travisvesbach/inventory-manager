@@ -2,16 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+default_text        - gray-700
+dark_default_text   - gray-300
+
+secondary_text      - gray-600
+dark_secondary_text - gray-400
+
+heading_text        - gray-900
+dark_heading_text   - purple-600
+
+primary color (for buttons, form inputs, and links)
+primary_text                    - purple-900
+primary_text_hover              - purple-600
+primary_bg                      - purple-900
+primary_bg_hover/focus          - purple-600
+primary_btn_ring                - purple-700
+primary_intput_ring             - purple-200
+
+dark_primary_text               - purple-400
+dark_primary_text_hover         - purple-600
+dark_primary_bg                 - purple-300
+dark_primary_bg_hover/focus     - purple-400
+dark_primary_btn_ring           - purple-500
+dark_primary_intput_ring        - purple-500
+
+secondary color (for secondary buttons and links)
+secondary_text                  - indigo-900
+secondary_text_hover            - indigo-600
+secondary_text_ring             - indigo-700
+secondary_bg                    - indigo-100
+secondary_bg_hover/focus        - indigo-200
+secondary_ring                  - indigo-300
+
+dark_secondary_text             - indigo-400
+dark_secondary_text_hover       - indigo-600
+dark_secondary_text_ring        - indigo-700
+dark_secondary_bg               - indigo-400
+dark_secondary_bg_hover/focus   - indigo-300
+dark_secondary_ring             - indigo-400
+
+
+*/
+
 .link {
-    @apply items-center text-sm font-medium focus:outline-none transition duration-150 ease-in-out;
+    @apply underline items-center font-medium focus:outline-none transition duration-150 ease-in-out;
 }
 
 .link-color {
-    @apply text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300;
+    @apply text-purple-900 hover:text-purple-600 focus:text-purple-600;
     @apply dark:text-purple-400 dark:hover:text-purple-600 dark:focus:text-purple-600;
 }
 
-.nav-link {
+.link-secondary-color {
+    @apply text-indigo-900 hover:text-indigo-600 focus:text-indigo-600 focus:ring-indigo-700;
+    @apply dark:text-indigo-400;
+}
+
+/*.nav-link {
     @apply inline-flex items-center ml-3 px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition h-full;
 }
 
@@ -21,15 +69,15 @@
 
 .nav-link-active {
     @apply border-indigo-400 text-gray-900 focus:border-indigo-700 dark:text-purple-600 dark:border-purple-600 dark:focus:border-purple-600;
-}
+}*/
 
 .text-color {
-    @apply text-gray-600;
+    @apply text-gray-700;
     @apply dark:text-gray-300;
 }
 
 .text-secondary-color {
-    @apply text-gray-500;
+    @apply text-gray-600;
     @apply dark:text-gray-400;
 }
 
@@ -40,8 +88,8 @@
 
 .form-input {
     @apply rounded-md shadow-sm focus:ring focus:ring-opacity-50;
-    @apply border-gray-300 focus:border-indigo-300 focus:ring-indigo-200;
-    @apply dark:bg-zinc-700 dark:border-zinc-800 dark:placeholder-gray-400 dark:focus:ring-purple-400;
+    @apply border-gray-300 focus:border-purple-200 focus:ring-purple-200;
+    @apply dark:bg-zinc-700 dark:border-zinc-800 dark:placeholder-gray-400 dark:focus:ring-purple-500;
 }
 
 
@@ -64,8 +112,8 @@
 /* no focus state, so apply these classes when .vs--open is set  */
 .vs__dropdown-menu,.vs--open {
     @apply rounded-md ring ring-opacity-50 !important;
-    @apply border-indigo-300 ring-indigo-200 border-gray-300 border-indigo-300 !important;
-    @apply dark:ring-purple-400 border-zinc-800 !important;
+    @apply border-purple-200 ring-purple-200 !important;
+    @apply dark:ring-purple-500 !important;
 }
 /* end vue-select */
 
@@ -74,7 +122,8 @@ input[type=number] {
 }
 
 input[type=checkbox] {
-    @apply h-5 w-5 cursor-pointer dark:text-purple-600 dark:hover:text-purple-600 dark:hover:bg-purple-600;
+    @apply h-5 w-5 cursor-pointer;
+    @apply dark:text-zinc-700 dark:hover:text-zinc-700 dark:hover:bg-purple-600;
 }
 
 .card {
@@ -108,14 +157,14 @@ input[type=checkbox] {
 }
 
 .btn-primary {
-    @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-400;
-    @apply dark:bg-purple-300 dark:text-black dark:hover:bg-purple-400 dark:active:bg-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400;
+    @apply bg-purple-900 border-transparent text-white hover:bg-purple-600 active:bg-purple-600 focus:border-purple-600 focus:ring-purple-700;
+    @apply dark:bg-purple-300 dark:text-black dark:hover:bg-purple-400 dark:active:bg-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-500;
 }
 
 .btn-secondary {
     @apply shadow-sm;
-    @apply bg-white border-gray-300 text-gray-700 hover:text-gray-500 focus:border-blue-300 focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 ;
-    @apply dark:bg-gray-600 dark:border-gray-600 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:border-purple-400 dark:focus:ring-purple-400 dark:active:text-gray-100 dark:active:bg-gray-900;
+    @apply bg-indigo-100 border-transparent text-gray-700 hover:bg-indigo-200 focus:border-indigo-200 focus:ring-indigo-300 active:bg-indigo-200 ;
+    @apply dark:bg-indigo-300 dark:hover:bg-indigo-400 dark:focus:border-indigo-400 dark:focus:ring-indigo-500 dark:active:bg-indigo-400;
 }
 
 .btn-danger {
@@ -130,12 +179,12 @@ input[type=checkbox] {
     @apply dark:hover:text-gray-100;
 }
 
-.btn-text:disabled, .btn-text[disabled] {
+/*.btn-text:disabled, .btn-text[disabled] {
     @apply cursor-default;
     @apply hover:text-current;
-}
+}*/
 
 .highlight {
-    @apply bg-blue-400;
+    @apply bg-purple-200;
     @apply dark:bg-purple-900;
 }

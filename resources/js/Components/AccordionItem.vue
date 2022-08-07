@@ -41,14 +41,14 @@
 
 <template>
     <div class="accordion-item overflow-x-hidden">
-        <button class="btn-text flex items-center" :class="buttonClasses" @click="toggle(!show)">
+        <button class="flex items-center" :class="buttonClasses" @click="toggle(!show)">
             <slot name="title"></slot>
             <svg xmlns="https://www.w3.org/2000/svg" class="transform ease-in duration-200" :class="iconClasses" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
         <TransitionExpand>
-            <div class="accorion-item-content h-auto" v-if="show">
+            <div class="accordion-item-content h-auto" v-if="show">
                 <slot></slot>
             </div>
         </TransitionExpand>
