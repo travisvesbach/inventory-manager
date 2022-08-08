@@ -208,21 +208,20 @@
                 </tr>
             </tbody>
         </table>
-        <div class="mt-5 flex justify-center" v-if="page_count > 1">
-                <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number--" :disabled="page_number == 1">Previous</JetSecondaryButton>
+        <div class="mt-5 flex justify-center" v-if="page_number > 1 || page_count > 1">
+            <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number--" :disabled="page_number == 1">Previous</JetSecondaryButton>
 
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = 1" v-if="page_number != 1">1</span>
-                <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number - 3 > 1">...</span>
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number - 2" v-if="page_number - 2 > 1">{{ page_number - 2 }}</span>
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number - 1" v-if="page_number - 1 > 1">{{ page_number - 1 }}</span>
-                <span class="mx-1">{{ page_number }}</span>
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number + 1" v-if="page_number + 1 < page_count">{{ page_number + 1 }}</span>
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number + 2" v-if="page_number + 2 < page_count">{{ page_number + 2 }}</span>
-                <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number + 3 < page_count">...</span>
-                <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_count" v-if="page_number < page_count">{{ page_count }}</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = 1" v-if="page_number != 1">1</span>
+            <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number - 3 > 1">...</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number - 2" v-if="page_number - 2 > 1">{{ page_number - 2 }}</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number - 1" v-if="page_number - 1 > 1">{{ page_number - 1 }}</span>
+            <span class="mx-1">{{ page_number }}</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number + 1" v-if="page_number + 1 < page_count">{{ page_number + 1 }}</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_number + 2" v-if="page_number + 2 < page_count">{{ page_number + 2 }}</span>
+            <span class="mx-1" @click="page_number = page_number - 2" v-if="page_number + 3 < page_count">...</span>
+            <span class="link link-secondary-color cursor-pointer mx-1" @click="page_number = page_count" v-if="page_number < page_count">{{ page_count }}</span>
 
-                <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number++" :disabled="page_number >= page_count || page_count <= 1">Next</JetSecondaryButton>
-
+            <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number++" :disabled="page_number >= page_count || page_count <= 1">Next</JetSecondaryButton>
         </div>
     </div>
 </template>

@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
         return [
             'name'              => 'required|max:255',
             'category_id'       => 'nullable|integer|not_in:' . ($this->id ?? null),
-            'icon'              => 'max:255',
+            'icon'              => 'nullable|max:255',
         ];
     }
 }
