@@ -6,6 +6,8 @@
     import JetInput from '@/Jetstream/Input.vue';
     import JetButton from '@/Jetstream/Button.vue';
     import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
+    import JetCheckbox from '@/Jetstream/Checkbox.vue';
+    import InputCheckbox from '@/Components/InputCheckbox.vue';
 
     const props = defineProps({
         headers: Object,
@@ -28,6 +30,7 @@
     const sort_reverse = ref(false);
     const page_number = ref(1);
     const per_page = ref(3);
+    const selected = ref([]);
 
     const buttonClasses = computed(() => {
         let classes = props.button_classes + ' ';
@@ -136,6 +139,37 @@
 
         form.delete(route(props.route_slug + '.destroy', item.id));
     }
+
+    function toggleSelected(item) {
+        if(selected.value.includes(item.id)) {
+            removeSelected(item);
+        } else {
+            addSelected(item);
+        }
+    }
+
+    function addSelected(item) {
+        if(!selected.value.includes(item.id)) {
+            selected.value.push(item.id);
+        }
+    }
+
+    function removeSelected(item) {
+        if(selected.value.includes(item.id)) {
+            selected.value.splice(selected.value.indexOf(item.id), 1);
+        }
+    }
+
+    function toggleSelectPage(event) {
+            console.log(event.target.checked)
+        for(let item of filtered.value) {
+            if(event.target.checked) {
+                addSelected(item);
+            } else {
+                removeSelected(item);
+            }
+        }
+    }
 </script>
 
 <template>
@@ -149,6 +183,29 @@
         <table class="w-full mt-2">
             <thead>
                 <tr class="border-b-2 border-color" v-if="props.headers">
+                    <th class="flex">
+                        <!-- <JetCheckbox title="Select All" /> -->
+
+                        <!-- dropdown -->
+                        <JetDropdown align="left" width="48" class="">
+                            <template #trigger>
+                                <button class="ml-auto flex link link-color">
+                                    <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </template>
+
+                            <template #content>
+                                <div class="px-4 py-2 text-sm">
+                                    <InputCheckbox id="select-page" class="mt-0" label="Select all on page" @click="toggleSelectPage"/>
+                                </div>
+                            </template>
+                        </JetDropdown>
+
+
+
+                    </th>
                     <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
                 </tr>
             </thead>
@@ -159,6 +216,9 @@
                     </td>
                 </tr>
                 <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
+                    <td>
+                        <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
+                    </td>
                     <td class="py-2 px-1" v-for="header in props.headers">
                         <!-- link -->
                         <Link :href="item.path"
