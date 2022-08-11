@@ -1,4 +1,5 @@
 <script setup>
+    import { computed } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3';
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Card from '@/Components/Card.vue'
@@ -11,6 +12,13 @@
         },
         locations: Array,
     })
+
+    const addressSet = computed(() => {
+        if(props.location.address || props.location.address_secondary || props.location.city || props.location.state || props.location.country || props.location.zipcode) {
+            return true;
+        }
+        return false;
+    });
 </script>
 <template>
     <AppLayout :title="location.name">
@@ -28,7 +36,7 @@
                             {{ location.name }}
                         </td>
                     </tr>
-                    <tr v-if="location.location">
+                    <tr v-if="addressSet">
                         <td>
                             Parent location:
                         </td>
@@ -36,6 +44,17 @@
                             <Link :href="location.location.path"
                                 class="text-lg link-color"
                                 v-html="location.location.name"/>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td>
+                            Address
+                        </td>
+                        <td>
+                            {{ location.address }}<br v-if="location.address">
+                            {{ location.address_secondary }}<br v-if="location.address_secondary">
+                            {{ location.city }}<span v-if="location.city && location.state">,</span> {{ location.state }} {{ location.zipcode }} <br v-if="location.country">
+                            {{ location.country }}
                         </td>
                     </tr>
                 </table>

@@ -182,28 +182,21 @@
                             v-html="content(item[header.key])"
                             v-else/>
                     </td>
-                    <td class="py-2 px-1" v-if="props.actions">
-                        <!-- dropdown -->
-                        <JetDropdown align="right" width="48">
-                            <template #trigger>
-                                <button class="ml-auto flex link link-color">
-                                    <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </template>
-
-                            <template #content>
-                                <div>
-                                    <JetDropdownLink :href="route(props.route_slug + '.edit', item.id)" v-if="props.actions.includes('edit')">
-                                        Edit
-                                    </JetDropdownLink>
-                                    <JetDropdownLink @click="deleteItem(item)" v-if="props.actions.includes('delete') && $page.props.user.admin">
-                                        Delete
-                                    </JetDropdownLink>
-                                </div>
-                            </template>
-                        </JetDropdown>
+                    <td class="py-2 px-1 flex justify-end" v-if="props.actions">
+                        <Link :href="route(props.route_slug + '.edit', item.id)"
+                            class="btn btn-sm btn-square btn-primary"
+                            title="Edit"
+                            as="button"
+                            v-if="props.actions.includes('edit')">
+                            <i class="fa-solid fa-pencil text-lg"></i>
+                        </Link>
+                        <button @click="deleteItem(item)"
+                            class="btn btn-sm btn-square btn-danger ml-2"
+                            title="Delete"
+                            as="button"
+                            v-if="props.actions.includes('edit')">
+                            <i class="fa-solid fa-trash text-lg"></i>
+                        </button>
                     </td>
                 </tr>
             </tbody>

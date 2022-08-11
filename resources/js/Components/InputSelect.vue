@@ -63,7 +63,7 @@
         <vSelect :id="props.id"
             :options="props.options"
             :label="props.option_label"
-            :reduce="(option) => option[props.option_value]"
+            :reduce="(option) => props.option_value ? option[props.option_value] : option"
             v-model="modelValue"
             v-on:update:modelValue="updateValue"
             :disabled="props.disabled"
