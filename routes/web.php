@@ -39,5 +39,8 @@ Route::middleware([
 
     Route::resource('users', UsersController::class);
     Route::resource('categories', CategoriesController::class);
+    Route::post('categories/bulk_destroy', [CategoriesController::class, 'bulkDestroy'])->name('categories.bulk_destroy');
+
     Route::resource('locations', LocationsController::class);
+    Route::post('locations/bulk_destroy', [LocationsController::class, 'bulkDestroy'])->name('locations.bulk_destroy');
 });

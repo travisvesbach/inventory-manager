@@ -83,4 +83,21 @@ class LocationsTest extends TestCase
 
         $this->post(route('locations.store'), $attributes)->assertSessionHasErrors('name');
     }
+
+
+    /** @test **/
+    public function a_user_can_bulk_delete_locations() {
+        $this->signIn();
+
+        $locations[] = Location::factory()->create()->id;
+        $locations[] = Location::factory()->create()->id;
+        $locations[] = Location::factory()->create()->id;
+
+        $this->post(route('locations.bulk_destroy', ['ids' => $locations]))
+            ->assertRedirect(route('locations.index'),);
+
+        foreach($locations as $id) {
+            $this->assertSoftDeleted('locations', ['id' => $id]);
+        }
+    }
 }

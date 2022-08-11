@@ -83,4 +83,20 @@ class CategoriesTest extends TestCase
 
         $this->post(route('categories.store'), $attributes)->assertSessionHasErrors('name');
     }
+
+    /** @test **/
+    public function a_user_can_bulk_delete_categories() {
+        $this->signIn();
+
+        $categories[] = Category::factory()->create()->id;
+        $categories[] = Category::factory()->create()->id;
+        $categories[] = Category::factory()->create()->id;
+
+        $this->post(route('categories.bulk_destroy', ['ids' => $categories]))
+            ->assertRedirect(route('categories.index'),);
+
+        foreach($categories as $id) {
+            $this->assertSoftDeleted('categories', ['id' => $id]);
+        }
+    }
 }

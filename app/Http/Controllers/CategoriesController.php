@@ -50,4 +50,11 @@ class CategoriesController extends Controller
 
         return redirect(route('categories.index'))->with(['flash_message' => $category->name . ' deleted', 'flash_status' => 'danger']);
     }
+
+    public function bulkDestroy(Request $request) {
+        if($request->filled('ids')) {
+            Category::whereIn('id', $request->input('ids'))->delete();
+        }
+        return redirect(route('categories.index'))->with(['flash_message' => count($request->input('ids')) . ' categories deleted', 'flash_status' => 'danger']);
+    }
 }

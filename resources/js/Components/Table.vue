@@ -5,9 +5,11 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
     import JetInput from '@/Jetstream/Input.vue';
     import JetButton from '@/Jetstream/Button.vue';
+    import JetDangerButton from '@/Jetstream/DangerButton.vue';
     import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
     import JetCheckbox from '@/Jetstream/Checkbox.vue';
     import InputCheckbox from '@/Components/InputCheckbox.vue';
+    import JetConfirmationModal from '@/Jetstream/ConfirmationModal.vue';
 
     const props = defineProps({
         headers: Object,
@@ -25,12 +27,19 @@
 
     const empty_char = '&#8212';
 
-    const search = ref(null);
-    const sort_key = ref(null);
-    const sort_reverse = ref(false);
-    const page_number = ref(1);
-    const per_page = ref(3);
-    const selected = ref([]);
+    const search        = ref(null);
+    const sort_key      = ref(null);
+    const sort_reverse  = ref(false);
+    const page_number   = ref(1);
+    const per_page      = ref(3);
+    const selected      = ref([]);
+    const deleting      = ref(null);
+
+    const form_delete   = useForm({
+        id: null,
+        ids: null,
+    });
+
 
     const buttonClasses = computed(() => {
         let classes = props.button_classes + ' ';
@@ -133,11 +142,25 @@
     }
 
     function deleteItem(item) {
-        let form = useForm({
-            id: (item ? item.id : null),
-        });
+        form_delete.id = (item ? item.id : null);
 
-        form.delete(route(props.route_slug + '.destroy', item.id));
+        form_delete.delete(route(props.route_slug + '.destroy', item.id), {
+            onSuccess: () => {
+                form_delete.reset();
+                deleting.value = null;
+            },
+        });
+    }
+
+    function deleteSelected() {
+        form_delete.ids = selected.value;
+
+        form_delete.post(route(props.route_slug + '.bulk_destroy'), {
+            onSuccess: () => {
+                form_delete.reset();
+                deleting.value = null;
+            },
+        });
     }
 
     function toggleSelected(item) {
@@ -161,8 +184,7 @@
     }
 
     function toggleSelectPage(event) {
-            console.log(event.target.checked)
-        for(let item of filtered.value) {
+        for(let item of paginated_data.value) {
             if(event.target.checked) {
                 addSelected(item);
             } else {
@@ -203,7 +225,13 @@
                             </template>
                         </JetDropdown>
 
-
+                        <button @click="deleting = 'bulk'"
+                            class="btn btn-sm btn-square btn-danger ml-2"
+                            title="Delete"
+                            as="button"
+                            v-if="props.actions.includes('delete')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
 
                     </th>
                     <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
@@ -250,11 +278,11 @@
                             v-if="props.actions.includes('edit')">
                             <i class="fa-solid fa-pencil text-lg"></i>
                         </Link>
-                        <button @click="deleteItem(item)"
+                        <button @click="deleting = item"
                             class="btn btn-sm btn-square btn-danger ml-2"
                             title="Delete"
                             as="button"
-                            v-if="props.actions.includes('edit')">
+                            v-if="props.actions.includes('delete')">
                             <i class="fa-solid fa-trash text-lg"></i>
                         </button>
                     </td>
@@ -276,5 +304,33 @@
 
             <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number++" :disabled="page_number >= page_count || page_count <= 1">Next</JetSecondaryButton>
         </div>
+
+        <!-- delete confirmation modal -->
+        <JetConfirmationModal :show="deleting ? true : false" @close="deleting = null">
+            <template #title>
+                Delete
+            </template>
+
+            <template #content>
+                Are you sure you would like to delete {{ deleting == 'bulk' ? 'the selected items' : 'this item' }}?
+            </template>
+
+            <template #footer>
+                <div class="w-full flex justify-between">
+                    <JetSecondaryButton @click="deleting = null">
+                        Cancel
+                    </JetSecondaryButton>
+
+                    <JetDangerButton
+                        class="ml-3"
+                        :class="{ 'opacity-25': form_delete.processing }"
+                        :disabled="form_delete.processing"
+                        @click="deleting == 'bulk' ? deleteSelected() : deleteItem(deleting)"
+                    >
+                        Delete
+                    </JetDangerButton>
+                </div>
+            </template>
+        </JetConfirmationModal>
     </div>
 </template>

@@ -50,4 +50,11 @@ class LocationsController extends Controller
 
         return redirect(route('locations.index'))->with(['flash_message' => $location->name . ' deleted', 'flash_status' => 'danger']);
     }
+
+    public function bulkDestroy(Request $request) {
+        if($request->filled('ids')) {
+            Location::whereIn('id', $request->input('ids'))->delete();
+        }
+        return redirect(route('locations.index'))->with(['flash_message' => count($request->input('ids')) . ' locations deleted', 'flash_status' => 'danger']);;
+    }
 }
