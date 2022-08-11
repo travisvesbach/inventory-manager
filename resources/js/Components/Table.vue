@@ -205,7 +205,7 @@
         <table class="w-full mt-2">
             <thead>
                 <tr class="border-b-2 border-color" v-if="props.headers">
-                    <th class="flex">
+                    <th class="flex" v-if="props.actions">
                         <!-- <JetCheckbox title="Select All" /> -->
 
                         <!-- dropdown -->
@@ -229,7 +229,7 @@
                             class="btn btn-sm btn-square btn-danger ml-2"
                             title="Delete"
                             as="button"
-                            v-if="props.actions.includes('delete')">
+                            v-if="props.actions && props.actions.includes('delete')">
                             <i class="fa-solid fa-trash"></i>
                         </button>
 
@@ -244,7 +244,7 @@
                     </td>
                 </tr>
                 <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
-                    <td>
+                    <td v-if="props.actions">
                         <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
                     </td>
                     <td class="py-2 px-1" v-for="header in props.headers">

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
+use Session;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Inertia::share('flash', function () {
+            return [
+                'message' => Session::get('flash_message'),
+                'status' => Session::get('flash_status'),
+                'timestamp' => Carbon::now(),
+            ];
+        });
     }
 
     /**

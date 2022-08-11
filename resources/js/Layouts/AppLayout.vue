@@ -17,6 +17,7 @@ import DropdownDivider from '@/Components/DropdownDivider.vue';
 import DropdownHeader from '@/Components/DropdownHeader.vue';
 import PageHeading from '@/Components/PageHeading.vue';
 import PageContent from '@/Components/PageContent.vue';
+import Flash from '@/Components/Flash.vue';
 
 defineProps({
     title: String,
@@ -249,6 +250,12 @@ provide('showingLeftSidebar', showingLeftSidebar);
                         <slot />
                     </PageContent>
                 </main>
+
+                <Flash
+                    v-bind:message="$page.props.flash.message"
+                    v-bind:status="$page.props.flash.status"
+                    v-bind:timestamp="$page.props.flash.timestamp" />
+
             </div>
         </div>
     </div>
