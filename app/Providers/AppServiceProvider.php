@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
                 'timestamp' => Carbon::now(),
             ];
         });
+        Inertia::share('categories_top', function () {
+            return \App\Models\Category::whereNull('category_id')->with('allSubcategories')->orderBy('name')->get();
+        });
     }
 
     /**

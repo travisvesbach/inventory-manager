@@ -38,4 +38,8 @@ class Category extends Model
     public function subcategories() {
         return $this->hasMany(Category::class, 'category_id', 'id');
     }
+
+    public function allSubcategories() {
+        return $this->subcategories()->with('allSubcategories');
+    }
 }

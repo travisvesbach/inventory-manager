@@ -192,6 +192,16 @@
             }
         }
     }
+
+    function toggleSelectAll(event) {
+        for(let item of filtered.value) {
+            if(event.target.checked) {
+                addSelected(item);
+            } else {
+                removeSelected(item);
+            }
+        }
+    }
 </script>
 
 <template>
@@ -206,8 +216,6 @@
             <thead>
                 <tr class="border-b-2 border-color" v-if="props.headers">
                     <th class="flex" v-if="props.actions">
-                        <!-- <JetCheckbox title="Select All" /> -->
-
                         <!-- dropdown -->
                         <JetDropdown align="left" width="48" class="">
                             <template #trigger>
@@ -220,7 +228,10 @@
 
                             <template #content>
                                 <div class="px-4 py-2 text-sm">
-                                    <InputCheckbox id="select-page" class="mt-0" label="Select all on page" @click="toggleSelectPage"/>
+                                    <InputCheckbox id="select-page" class="mt-0" :label="'Select all on page ('+ paginated_data.length +')'" @click="toggleSelectPage"/>
+                                </div>
+                                <div class="px-4 py-2 text-sm">
+                                    <InputCheckbox id="select-all" class="mt-0" :label="'Select all matching ('+ filtered.length +')'" @click="toggleSelectAll"/>
                                 </div>
                             </template>
                         </JetDropdown>

@@ -13,6 +13,7 @@ import AccordionItem from '@/Components/AccordionItem.vue';
 import SidebarLink from '@/Components/SidebarLink.vue';
 import SidebarAccordionItem from '@/Components/SidebarAccordionItem.vue';
 import SidebarDivider from '@/Components/SidebarDivider.vue';
+import SidebarCategoryItem from '@/Components/SidebarCategoryItem.vue';
 import DropdownDivider from '@/Components/DropdownDivider.vue';
 import DropdownHeader from '@/Components/DropdownHeader.vue';
 import PageHeading from '@/Components/PageHeading.vue';
@@ -65,23 +66,9 @@ provide('showingLeftSidebar', showingLeftSidebar);
             <SidebarLink :href="route('dashboard')" text="Item 1" icon="fa-solid fa-car-side"/>
 
             <Accordion>
-                <SidebarAccordionItem id="electronics" title="Electronics" icon="fa-solid fa-bolt">
-                    <SidebarLink :href="route('dashboard')" text="All Electronics"/>
-                    <Accordion>
-                        <SidebarAccordionItem id="camera" title="Camera" icon="fa-solid fa-camera">
-                            <SidebarLink :href="route('dashboard')" text="All Camera" icon="fa-solid fa-camera" class="active"/>
-                            <SidebarLink :href="route('dashboard')" text="Bodies" icon="fa-solid fa-camera"/>
-                            <SidebarLink :href="route('dashboard')" text="Filters" icon="fa-solid fa-circle-half-stroke"/>
-                            <SidebarLink :href="route('dashboard')" text="Lenses" icon="fa-solid fa-camera-retro"/>
-                        </SidebarAccordionItem>
-                    </Accordion>
-                    <SidebarLink :href="route('dashboard')" text="Computer" icon="fa-solid fa-computer"/>
-                </SidebarAccordionItem>
-                <SidebarAccordionItem id="firearms" title="Firearms" icon="fa-solid fa-gun">
-                    <SidebarLink :href="route('dashboard')" text="All Firearms" icon="fa-solid fa-gun"/>
-                    <SidebarLink :href="route('dashboard')" text="Ammo" icon="fa-solid fa-gun"/>
-                    <SidebarLink :href="route('dashboard')" text="Optics" icon="fa-solid fa-crosshairs"/>
-                </SidebarAccordionItem>
+
+                <SidebarCategoryItem :category="category" v-for="category in $page.props.categories_top" />
+
                 <SidebarLink :href="route('locations.index')" text="Locations" icon="fa-solid fa-location-dot"/>
                 <SidebarAccordionItem id="firearms" title="Settings" icon="fa-solid fa-gear">
                     <SidebarLink :href="route('categories.index')" text="Categories" icon="fa-solid fa-object-group"/>
