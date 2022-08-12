@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\UsersController;
@@ -43,4 +44,7 @@ Route::middleware([
 
     Route::resource('locations', LocationsController::class);
     Route::post('locations/bulk_destroy', [LocationsController::class, 'bulkDestroy'])->name('locations.bulk_destroy');
+
+    Route::resource('assets', AssetsController::class);
+    Route::post('assets/bulk_destroy', [AssetsController::class, 'bulkDestroy'])->name('assets.bulk_destroy');
 });
