@@ -17,14 +17,12 @@
     })
 
     const flash_array = ref([]);
-    const watch_timestamp = ref(props.timestamp)
 
-    watch(watch_timestamp, async () => {
+    watch(() => props.timestamp, async () => {
         flash();
     });
 
     function flash() {
-        console.log('here');
         let message = {
             message: props.message,
             status: props.status
@@ -64,11 +62,6 @@
         </div>
     </div>
 </template>
-<!--         // created() {
-            // if (this.message) {
-            //     this.flash(this.message);
-            // }
-        // }, -->
 
 <style>
     .alert-flash {

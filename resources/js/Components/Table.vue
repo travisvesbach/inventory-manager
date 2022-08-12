@@ -229,6 +229,7 @@
                             class="btn btn-sm btn-square btn-danger ml-2"
                             title="Delete"
                             as="button"
+                            :disabled="selected.length == 0"
                             v-if="props.actions && props.actions.includes('delete')">
                             <i class="fa-solid fa-trash"></i>
                         </button>
@@ -312,7 +313,7 @@
             </template>
 
             <template #content>
-                Are you sure you would like to delete {{ deleting == 'bulk' ? 'the selected items' : 'this item' }}?
+                Are you sure you would like to delete {{ deleting == 'bulk' ? 'these ' + selected.length + ' selected items' : 'this item' }}?
             </template>
 
             <template #footer>
