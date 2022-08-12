@@ -63,8 +63,6 @@ provide('showingLeftSidebar', showingLeftSidebar);
             </div>
             <SidebarDivider/>
 
-            <SidebarLink :href="route('dashboard')" text="Item 1" icon="fa-solid fa-car-side"/>
-
             <Accordion>
 
                 <SidebarCategoryItem :category="category" v-for="category in $page.props.categories_top" />

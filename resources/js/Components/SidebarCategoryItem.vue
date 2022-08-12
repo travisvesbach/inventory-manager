@@ -16,12 +16,12 @@
 
 
             <Accordion>
-                <SidebarLink :href="route('dashboard')" :text="'All ' + category.name" />
+                <SidebarLink :href="route('categories.show', category.id)" :text="'All ' + category.name" />
                 <SidebarCategoryItem :category="subcategory" v-for="subcategory in category.all_subcategories" />
             </Accordion>
 
         </SidebarAccordionItem>
 
-        <SidebarLink :href="route('dashboard')" :text="category.name" :icon="category.icon" v-else/>
+        <SidebarLink :href="route('categories.show', category.id)" :text="category.name" :icon="category.icon" v-else/>
     </div>
 </template>

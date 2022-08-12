@@ -31,7 +31,7 @@
     const sort_key      = ref(null);
     const sort_reverse  = ref(false);
     const page_number   = ref(1);
-    const per_page      = ref(3);
+    const per_page      = ref(20);
     const selected      = ref([]);
     const deleting      = ref(null);
 
@@ -205,102 +205,104 @@
 </script>
 
 <template>
-    <div>
+    <div class="w-full">
         <div class="flex justify-between">
             <div>
                 <slot></slot>
             </div>
             <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="props.search"/>
         </div>
-        <table class="w-full mt-2">
-            <thead>
-                <tr class="border-b-2 border-color" v-if="props.headers">
-                    <th class="flex" v-if="props.actions">
-                        <!-- dropdown -->
-                        <JetDropdown align="left" width="48" class="">
-                            <template #trigger>
-                                <button class="ml-auto flex link link-color">
-                                    <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </template>
+        <div class="w-full overflow-scroll">
+            <table class="w-full mt-2">
+                <thead>
+                    <tr class="border-b-2 border-color" v-if="props.headers">
+                        <th class="flex" v-if="props.actions">
+                            <!-- dropdown -->
+                            <JetDropdown align="left" width="48" class="">
+                                <template #trigger>
+                                    <button class="ml-auto flex link link-color">
+                                        <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </template>
 
-                            <template #content>
-                                <div class="px-4 py-2 text-sm">
-                                    <InputCheckbox id="select-page" class="mt-0" :label="'Select all on page ('+ paginated_data.length +')'" @click="toggleSelectPage"/>
-                                </div>
-                                <div class="px-4 py-2 text-sm">
-                                    <InputCheckbox id="select-all" class="mt-0" :label="'Select all matching ('+ filtered.length +')'" @click="toggleSelectAll"/>
-                                </div>
-                            </template>
-                        </JetDropdown>
+                                <template #content>
+                                    <div class="px-4 py-2 text-sm">
+                                        <InputCheckbox id="select-page" class="mt-0" :label="'Select all on page ('+ paginated_data.length +')'" @click="toggleSelectPage"/>
+                                    </div>
+                                    <div class="px-4 py-2 text-sm">
+                                        <InputCheckbox id="select-all" class="mt-0" :label="'Select all matching ('+ filtered.length +')'" @click="toggleSelectAll"/>
+                                    </div>
+                                </template>
+                            </JetDropdown>
 
-                        <button @click="deleting = 'bulk'"
-                            class="btn btn-sm btn-square btn-danger ml-2"
-                            title="Delete"
-                            as="button"
-                            :disabled="selected.length == 0"
-                            v-if="props.actions && props.actions.includes('delete')">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                            <button @click="deleting = 'bulk'"
+                                class="btn btn-sm btn-square btn-danger ml-2"
+                                title="Delete"
+                                as="button"
+                                :disabled="selected.length == 0"
+                                v-if="props.actions && props.actions.includes('delete')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
 
-                    </th>
-                    <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="paginated_data.length == 0" class="text-center">
-                    <td colspan="100%">
-                        No results
-                    </td>
-                </tr>
-                <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
-                    <td v-if="props.actions">
-                        <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
-                    </td>
-                    <td class="py-2 px-1" v-for="header in props.headers">
-                        <!-- link -->
-                        <Link :href="item.path"
-                            class="text-lg link link-color"
-                            v-html="content(item[header.key])"
-                            v-if="header.format == 'link' && item[header.key]"/>
-                        <!-- obj_link -->
-                        <Link :href="item[header.key].path"
-                            class="text-lg link link-color"
-                            v-html="content(item[header.key][header.subkey])"
-                            v-else-if="header.format == 'obj_link' && item[header.key] && item[header.key][header.subkey]"/>
-                        <!-- icon -->
-                        <i :class="item[header.key]"
-                            v-else-if="header.format == 'icon' && item[header.key]"/>
-                        <!-- boolean -->
-                        <span class="text-lg"
-                            v-html="content(formatBoolean(item[header.key], header))"
-                            v-else-if="header.format == 'boolean'"/>
-                        <!-- text -->
-                        <span class="text-lg"
-                            v-html="content(item[header.key])"
-                            v-else/>
-                    </td>
-                    <td class="py-2 px-1 flex justify-end" v-if="props.actions">
-                        <Link :href="route(props.route_slug + '.edit', item.id)"
-                            class="btn btn-sm btn-square btn-primary"
-                            title="Edit"
-                            as="button"
-                            v-if="props.actions.includes('edit')">
-                            <i class="fa-solid fa-pencil text-lg"></i>
-                        </Link>
-                        <button @click="deleting = item"
-                            class="btn btn-sm btn-square btn-danger ml-2"
-                            title="Delete"
-                            as="button"
-                            v-if="props.actions.includes('delete')">
-                            <i class="fa-solid fa-trash text-lg"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </th>
+                        <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="paginated_data.length == 0" class="text-center">
+                        <td colspan="100%">
+                            No results
+                        </td>
+                    </tr>
+                    <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
+                        <td v-if="props.actions">
+                            <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
+                        </td>
+                        <td class="py-2 px-1" v-for="header in props.headers">
+                            <!-- link -->
+                            <Link :href="item.path"
+                                class="text-lg link link-color"
+                                v-html="content(item[header.key])"
+                                v-if="header.format == 'link' && item[header.key]"/>
+                            <!-- obj_link -->
+                            <Link :href="item[header.key].path"
+                                class="text-lg link link-color"
+                                v-html="content(item[header.key][header.subkey])"
+                                v-else-if="header.format == 'obj_link' && item[header.key] && item[header.key][header.subkey]"/>
+                            <!-- icon -->
+                            <i :class="item[header.key]"
+                                v-else-if="header.format == 'icon' && item[header.key]"/>
+                            <!-- boolean -->
+                            <span class="text-lg"
+                                v-html="content(formatBoolean(item[header.key], header))"
+                                v-else-if="header.format == 'boolean'"/>
+                            <!-- text -->
+                            <span class="text-lg"
+                                v-html="content(item[header.key])"
+                                v-else/>
+                        </td>
+                        <td class="py-2 px-1 flex justify-end" v-if="props.actions">
+                            <Link :href="route(props.route_slug + '.edit', item.id)"
+                                class="btn btn-sm btn-square btn-primary"
+                                title="Edit"
+                                as="button"
+                                v-if="props.actions.includes('edit')">
+                                <i class="fa-solid fa-pencil text-lg"></i>
+                            </Link>
+                            <button @click="deleting = item"
+                                class="btn btn-sm btn-square btn-danger ml-2"
+                                title="Delete"
+                                as="button"
+                                v-if="props.actions.includes('delete')">
+                                <i class="fa-solid fa-trash text-lg"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="mt-5 flex justify-center" v-if="page_number > 1 || page_count > 1">
             <JetSecondaryButton class="btn btn-sm mx-3" @click="page_number--" :disabled="page_number == 1">Previous</JetSecondaryButton>
 
