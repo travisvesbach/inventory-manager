@@ -83,7 +83,7 @@
                         Info URL:
                     </td>
                     <td>
-                        <a :href="asset.info_url" class="text-lg link-color">More Info</a>
+                        <a :href="asset.info_url" target="_blank" class="text-lg link-color">More Info</a>
                     </td>
                 </tr>
             </table>

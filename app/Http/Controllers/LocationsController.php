@@ -29,7 +29,7 @@ class LocationsController extends Controller
     }
 
     public function show(Location $location) {
-        $location->load(['location', 'locations']);
+        $location->load(['location', 'locations', 'assets']);
         return Inertia::render('Locations/Show', compact(['location']));
     }
 
