@@ -8,17 +8,19 @@ use App\Http\Requests\AssetRequest;
 use App\Models\User;
 use App\Models\Asset;
 use App\Models\Category;
+use App\Models\Location;
 
 class AssetsController extends Controller
 {
     public function index() {
-        $assets = Asset::orderBy('name')->get();
-        return Inertia::render('Assets/Index', compact(['categories']));
+        $assets = Asset::orderBy('name')->with('category', 'location')->get();
+        return Inertia::render('Assets/Index', compact(['assets']));
     }
 
     public function create() {
-        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
-        return Inertia::render('Assets/Edit', compact(['categories']));
+        $categories = Category::select(['id', 'name'])->orderBy('name')->get();
+        $locations = Location::select(['id', 'name'])->orderBy('name')->get();
+        return Inertia::render('Assets/Edit', compact(['categories', 'locations']));
     }
 
     public function store(AssetRequest $request) {
@@ -30,12 +32,14 @@ class AssetsController extends Controller
     }
 
     public function show(Asset $asset) {
+        $asset->load(['category', 'location']);
         return Inertia::render('Assets/Show', compact(['asset']));
     }
 
     public function edit(Asset $asset) {
         $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
-        return Inertia::render('Assets/Edit', ['editing' => $asset, 'categories' => $categories]);
+        $locations = Location::select(['id', 'name'])->orderBy('name')->get();
+        return Inertia::render('Assets/Edit', ['editing' => $asset, 'categories' => $categories, 'locations' => $locations]);
     }
 
     public function update(AssetRequest $request, Asset $asset) {

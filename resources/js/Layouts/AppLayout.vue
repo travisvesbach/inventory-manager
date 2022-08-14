@@ -64,6 +64,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
             <SidebarDivider/>
 
             <Accordion>
+                <SidebarLink :href="route('assets.index')" text="Assets" icon="fa-solid fa-list"/>
 
                 <SidebarCategoryItem :category="category" v-for="category in $page.props.categories_top" />
 

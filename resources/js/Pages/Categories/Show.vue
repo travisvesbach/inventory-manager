@@ -83,14 +83,9 @@
                             label: 'Name',
                             format: 'link',
                         },
-                        {
-                            key: 'icon',
-                            label: 'Icon',
-                            format: 'icon',
-                        },
                     ]"
-                    :data="props.category.subcategories"
-                    route_slug="categories"
+                    :data="props.category.assets"
+                    route_slug="assets"
                 />
             </Card>
         </div>

@@ -212,7 +212,7 @@
             </div>
             <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="props.search"/>
         </div>
-        <div class="w-full overflow-scroll">
+        <div class="w-full overflow-x-scroll">
             <table class="w-full mt-2">
                 <thead>
                     <tr class="border-b-2 border-color" v-if="props.headers">

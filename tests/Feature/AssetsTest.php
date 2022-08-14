@@ -87,6 +87,15 @@ class AssetsTest extends TestCase
     }
 
     /** @test **/
+    public function an_asset_requires_a_category() {
+        $this->signIn();
+
+        $attributes = Asset::factory()->raw(['category_id' => null]);
+
+        $this->post(route('assets.store'), $attributes)->assertSessionHasErrors('category_id');
+    }
+
+    /** @test **/
     public function a_user_can_bulk_delete_assets() {
         $this->signIn();
 

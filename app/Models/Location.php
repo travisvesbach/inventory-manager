@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Traits\Loggable;
+use App\Models\Asset;
 
 class Location extends Model
 {
@@ -44,5 +45,9 @@ class Location extends Model
 
     public function locations() {
         return $this->hasMany(Location::class, 'location_id', 'id');
+    }
+
+    public function assets() {
+        return $this->hasMany(Asset::class, 'location_id', 'id');
     }
 }

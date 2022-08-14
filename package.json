@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.1.2",
+        "@vuepic/vue-datepicker": "^3.4.2",
         "vue-select": "^4.0.0-beta.3"
     }
 }

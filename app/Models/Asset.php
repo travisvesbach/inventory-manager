@@ -29,6 +29,11 @@ class Asset extends Model
         'path',
     ];
 
+    protected $casts = [
+        'acquisition_date'  => 'date:Y-m-d',
+        'disposition_date'  => 'date:Y-m-d'
+    ];
+
     public function path() {
         return route('assets.show', $this->id);
     }

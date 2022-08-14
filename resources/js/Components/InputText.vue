@@ -19,6 +19,18 @@
             type: String,
             default: 'text'
         },
+        step: {
+            type: String,
+            default: null
+        },
+        min: {
+            type: String,
+            default: null
+        },
+        max: {
+            type: String,
+            default: null
+        },
         error: {
             type: String,
             default: ''
@@ -39,6 +51,9 @@
             class="mt-1 block w-full"
             :value="props.modelValue"
             :type="props.type"
+            :step="props.step"
+            :min="props.min"
+            :max="props.max"
             @input="updateValue"
         />
         <JetInputError :message="props.error" class="mt-2" />

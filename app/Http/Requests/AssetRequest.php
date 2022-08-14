@@ -26,11 +26,11 @@ class AssetRequest extends FormRequest
         return [
             'name'              => 'required|max:255',
             'category_id'       => 'required|integer',
-            'location_id'       => 'integer',
-            'acquisition_date'  => 'date',
-            'acquisition_price' => 'decimal',
-            'disposition_date'  => 'date',
-            'disposition_price' => 'decimal',
+            'location_id'       => 'nullable|integer',
+            'acquisition_date'  => 'nullable|date',
+            'acquisition_price' => 'nullable|numeric|between:0,999999.99',
+            'disposition_date'  => 'nullable|date',
+            'disposition_price' => 'nullable|numeric|between:0,999999.99',
             'info_url'          => 'max:255',
         ];
     }
