@@ -27,10 +27,10 @@
             <slot></slot>
             <template #footer>
                 <div class="w-full flex justify-end">
-                    <JetActionMessage :on="props.form.recentlySuccessful" class="mr-3">
+                    <JetActionMessage :on="form.recentlySuccessful" class="mr-3">
                         Saved.
                     </JetActionMessage>
-                    <JetButton :class="{ 'opacity-25': props.form.processing }" :disabled="props.form.processing">
+                    <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Save
                     </JetButton>
                 </div>

@@ -5,6 +5,7 @@
     import InputText from '@/Components/InputText.vue'
     import InputSelect from '@/Components/InputSelect.vue'
     import InputDate from '@/Components/InputDate.vue'
+    import InputTextarea from '@/Components/InputTextarea.vue'
 
     const props = defineProps({
         editing: {
@@ -41,13 +42,14 @@
     <AppLayout :title="editing && editing.name ? 'Edit Location: ' + editing.name : 'Create Location'">
         <Form :form="form" @submitted="submit">
             <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
-            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="props.categories" option_value="id" option_label="name" :disabled="props.categories.length == 0 ? true : false" />
-            <InputSelect id="location_id" label="Location" v-model="form.location_id" :error="form.errors.location_id" :options="props.locations" option_value="id" option_label="name" :disabled="props.locations.length == 0 ? true : false" />
+            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="categories" option_value="id" option_label="name" :disabled="categories.length == 0 ? true : false" />
+            <InputSelect id="location_id" label="Location" v-model="form.location_id" :error="form.errors.location_id" :options="locations" option_value="id" option_label="name" :disabled="locations.length == 0 ? true : false" />
             <InputDate id="acquisition_date" label="Acquisition Date" v-model="form.acquisition_date" :error="form.errors.acquisition_date" />
             <InputText id="acquisition_price" label="Acquisition Price" type="number" step="0.01" min="0" max="999999.99" v-model="form.acquisition_price" :error="form.errors.acquisition_price" />
             <InputDate id="disposition_date" label="Disposition Date" v-model="form.disposition_date" :error="form.errors.disposition_date" />
             <InputText id="disposition_price" label="Disposition Price" type="number" step="0.01" min="0" max="999999.99" v-model="form.disposition_price" :error="form.errors.disposition_price" />
             <InputText id="info_url" label="Info URL" v-model="form.info_url" :error="form.errors.info_url" />
+            <InputTextarea id="notes" label="Notes" v-model="form.notes" :error="form.errors.notes" />
         </Form>
     </AppLayout>
 

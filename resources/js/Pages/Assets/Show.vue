@@ -1,8 +1,7 @@
 <script setup>
     import { Link } from '@inertiajs/inertia-vue3';
     import AppLayout from '@/Layouts/AppLayout.vue';
-    import Card from '@/Components/Card.vue'
-    import Table from '@/Components/Table.vue';
+    import CardDetails from '@/Components/CardDetails.vue';
 
     const props = defineProps({
         asset: {
@@ -13,10 +12,7 @@
 </script>
 <template>
     <AppLayout :title="asset.name">
-        <Card class="w-full mb-4">
-            <template #header>
-                Details
-            </template>
+        <CardDetails route_slug="assets" :item="asset">
             <table class="w-full">
                 <tr>
                     <td>
@@ -86,7 +82,15 @@
                         <a :href="asset.info_url" target="_blank" class="text-lg link-color">More Info</a>
                     </td>
                 </tr>
+                <tr v-if="asset.notes">
+                    <td>
+                        Notes:
+                    </td>
+                    <td>
+                        {{ asset.notes }}
+                    </td>
+                </tr>
             </table>
-        </Card>
+        </CardDetails>
     </AppLayout>
 </template>

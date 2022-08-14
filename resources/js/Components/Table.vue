@@ -19,7 +19,7 @@
             default: null
         },
         route_slug: String,
-        search: {
+        searchable: {
             type: Boolean,
             default: true
         },
@@ -210,13 +210,13 @@
             <div>
                 <slot></slot>
             </div>
-            <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="props.search"/>
+            <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="searchable"/>
         </div>
         <div class="w-full overflow-x-scroll">
             <table class="w-full mt-2">
                 <thead>
-                    <tr class="border-b-2 border-color" v-if="props.headers">
-                        <th class="flex" v-if="props.actions">
+                    <tr class="border-b-2 border-color" v-if="headers">
+                        <th class="flex" v-if="actions">
                             <!-- dropdown -->
                             <JetDropdown align="left" width="48" class="">
                                 <template #trigger>
@@ -242,12 +242,12 @@
                                 title="Delete"
                                 as="button"
                                 :disabled="selected.length == 0"
-                                v-if="props.actions && props.actions.includes('delete')">
+                                v-if="actions && actions.includes('delete')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
 
                         </th>
-                        <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in props.headers">{{ header.label }}</th>
+                        <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -257,10 +257,10 @@
                         </td>
                     </tr>
                     <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
-                        <td v-if="props.actions">
+                        <td v-if="actions">
                             <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
                         </td>
-                        <td class="py-2 px-1" v-for="header in props.headers">
+                        <td class="py-2 px-1" v-for="header in headers">
                             <!-- link -->
                             <Link :href="item.path"
                                 class="text-lg link link-color"
@@ -283,19 +283,19 @@
                                 v-html="content(item[header.key])"
                                 v-else/>
                         </td>
-                        <td class="py-2 px-1 flex justify-end" v-if="props.actions">
-                            <Link :href="route(props.route_slug + '.edit', item.id)"
+                        <td class="py-2 px-1 flex justify-end" v-if="actions">
+                            <Link :href="route(route_slug + '.edit', item.id)"
                                 class="btn btn-sm btn-square btn-primary"
                                 title="Edit"
                                 as="button"
-                                v-if="props.actions.includes('edit')">
+                                v-if="actions.includes('edit')">
                                 <i class="fa-solid fa-pencil text-lg"></i>
                             </Link>
                             <button @click="deleting = item"
                                 class="btn btn-sm btn-square btn-danger ml-2"
                                 title="Delete"
                                 as="button"
-                                v-if="props.actions.includes('delete')">
+                                v-if="actions.includes('delete')">
                                 <i class="fa-solid fa-trash text-lg"></i>
                             </button>
                         </td>

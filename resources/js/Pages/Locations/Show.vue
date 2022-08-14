@@ -4,6 +4,8 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Card from '@/Components/Card.vue'
     import Table from '@/Components/Table.vue';
+    import CardDetails from '@/Components/CardDetails.vue';
+    import CardAssets from '@/Components/CardAssets.vue';
 
     const props = defineProps({
         location: {
@@ -24,10 +26,7 @@
     <AppLayout :title="location.name">
         <div class="md:flex justify-between md:flex-row-reverse">
             <div class="w-full md:w-1/4 md:ml-4">
-                <Card class="w-full mb-4">
-                    <template #header>
-                        Details
-                    </template>
+                <CardDetails route_slug="locations" :item="location">
                     <table class="w-full">
                         <tr>
                             <td>
@@ -59,8 +58,8 @@
                             </td>
                         </tr>
                     </table>
-                </Card>
-                <Card class="w-full mb-4 md:mb-0" v-if="props.location.locations.length > 0">
+                </CardDetails>
+                <Card class="w-full mb-4 md:mb-0" v-if="location.locations.length > 0">
                     <template #header>
                         Locations
                     </template>
@@ -72,28 +71,13 @@
                                 format: 'link',
                             },
                         ]"
-                        :data="props.location.locations"
+                        :data="location.locations"
                         route_slug="locations"
-                        :search="false"
+                        :searchable="false"
                     />
                 </Card>
             </div>
-            <Card class="w-full md:w-3/4">
-                <template #header>
-                    Assets
-                </template>
-                <Table
-                    :headers="[
-                        {
-                            key: 'name',
-                            label: 'Name',
-                            format: 'link',
-                        },
-                    ]"
-                    :data="props.location.assets"
-                    route_slug="assets"
-                />
-            </Card>
+            <CardAssets class="md:w-3/4" :assets="location.assets"/>
         </div>
     </AppLayout>
 </template>

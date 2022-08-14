@@ -1,6 +1,6 @@
 <script setup>
     import JetLabel from '@/Jetstream/Label.vue';
-    import JetCheckbox from '@/Jetstream/Checkbox.vue';
+    import JetInput from '@/Jetstream/Input.vue';
     import JetInputError from '@/Jetstream/InputError.vue';
 
     const props = defineProps({
@@ -13,7 +13,7 @@
             default: ''
         },
         modelValue: {
-            default: false
+            default: ''
         },
         error: {
             type: String,
@@ -24,20 +24,18 @@
     const emit = defineEmits(['update:modelValue'])
 
     function updateValue(event) {
-        emit('update:modelValue', event);
+        emit('update:modelValue', event.target.value);
     }
 
 </script>
 <template>
     <div class="col-span-6 sm:col-span-4 mt-4">
-        <div class="flex items-center">
-            <JetCheckbox :id="id"
-                class="mr-2"
-                :checked="modelValue ? true : false"
-                v-on:update:modelValue="updateValue"
-            />
-            <JetLabel :for="id" :value="label" />
-        </div>
+        <JetLabel :for="id" :value="label" />
+        <textarea :id="id"
+            class="mt-1 block w-full form-input"
+            :value="modelValue"
+            @input="updateValue"
+        />
         <JetInputError :message="error" class="mt-2" />
     </div>
 </template>

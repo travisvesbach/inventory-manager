@@ -32,6 +32,7 @@ class AssetRequest extends FormRequest
             'disposition_date'  => 'nullable|date',
             'disposition_price' => 'nullable|numeric|between:0,999999.99',
             'info_url'          => 'max:255',
+            'notes'             => '',
         ];
     }
 }

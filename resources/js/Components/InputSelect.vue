@@ -58,17 +58,17 @@
 
 <template>
     <div class="col-span-6 sm:col-span-4 mt-4">
-        <JetLabel :for="props.id" :value="props.label" />
-        <vSelect :id="props.id"
-            :options="props.options"
-            :label="props.option_label"
-            :reduce="(option) => props.option_value ? option[props.option_value] : option"
+        <JetLabel :for="id" :value="label" />
+        <vSelect :id="id"
+            :options="options"
+            :label="option_label"
+            :reduce="(option) => option_value ? option[option_value] : option"
             v-model="modelValue"
             v-on:update:modelValue="updateValue"
-            :disabled="props.disabled"
-            :clearable="props.clearable">
+            :disabled="disabled"
+            :clearable="clearable">
         </vSelect>
-        <JetInputError :message="props.error" class="mt-2" />
+        <JetInputError :message="error" class="mt-2" />
     </div>
 </template>
 

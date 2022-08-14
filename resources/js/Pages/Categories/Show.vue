@@ -3,6 +3,8 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import Card from '@/Components/Card.vue'
     import Table from '@/Components/Table.vue';
+    import CardDetails from '@/Components/CardDetails.vue';
+    import CardAssets from '@/Components/CardAssets.vue';
 
     const props = defineProps({
         category: {
@@ -16,10 +18,7 @@
     <AppLayout :title="category.name">
         <div class="md:flex justify-between md:flex-row-reverse">
             <div class="w-full md:w-1/4 md:ml-4">
-                <Card class="w-full mb-4">
-                    <template #header>
-                        Details
-                    </template>
+                <CardDetails route_slug="categories" :item="category">
                     <table class="w-full">
                         <tr>
                             <td>
@@ -48,8 +47,8 @@
                             </td>
                         </tr>
                     </table>
-                </Card>
-                <Card class="w-full mb-4 md:mb-0" v-if="props.category.subcategories.length > 0">
+                </CardDetails>
+                <Card class="w-full my-4 md:mb-0" v-if="category.subcategories.length > 0">
                     <template #header>
                         Subcategories
                     </template>
@@ -66,28 +65,13 @@
                                 format: 'icon',
                             },
                         ]"
-                        :data="props.category.subcategories"
+                        :data="category.subcategories"
                         route_slug="categories"
-                        :search="false"
+                        :searchable="false"
                     />
                 </Card>
             </div>
-            <Card class="w-full md:w-3/4">
-                <template #header>
-                    Assets
-                </template>
-                <Table
-                    :headers="[
-                        {
-                            key: 'name',
-                            label: 'Name',
-                            format: 'link',
-                        },
-                    ]"
-                    :data="props.category.assets"
-                    route_slug="assets"
-                />
-            </Card>
+            <CardAssets class="md:w-3/4" :assets="category.assets"/>
         </div>
     </AppLayout>
 </template>

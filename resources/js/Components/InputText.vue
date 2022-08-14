@@ -46,16 +46,16 @@
 </script>
 <template>
     <div class="col-span-6 sm:col-span-4 mt-4">
-        <JetLabel :for="props.id" :value="props.label" />
-        <JetInput :id="props.id"
+        <JetLabel :for="id" :value="label" />
+        <JetInput :id="id"
             class="mt-1 block w-full"
-            :value="props.modelValue"
-            :type="props.type"
-            :step="props.step"
-            :min="props.min"
-            :max="props.max"
+            :value="modelValue"
+            :type="type"
+            :step="step"
+            :min="min"
+            :max="max"
             @input="updateValue"
         />
-        <JetInputError :message="props.error" class="mt-2" />
+        <JetInputError :message="error" class="mt-2" />
     </div>
 </template>

@@ -33,7 +33,7 @@
     <AppLayout :title="editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category'">
         <Form :form="form" @submitted="submit">
             <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
-            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="props.categories" option_value="id" option_label="name" :disabled="props.categories.length == 0 ? true : false" />
+            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="categories" option_value="id" option_label="name" :disabled="categories.length == 0 ? true : false" />
             <InputText id="icon" label="Icon" v-model="form.icon" :error="form.errors.icon"/>
         </Form>
     </AppLayout>

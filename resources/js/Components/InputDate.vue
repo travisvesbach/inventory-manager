@@ -42,7 +42,7 @@
 </script>
 <template>
     <div class="col-span-6 sm:col-span-4 mt-4">
-        <JetLabel :for="props.id" :value="props.label" />
+        <JetLabel :for="id" :value="label" />
         <Datepicker
             class="mt-1"
             v-model="modelValue"
@@ -57,7 +57,7 @@
             :dark="darkMode"
         >
         </Datepicker>
-        <JetInputError :message="props.error" class="mt-2" />
+        <JetInputError :message="error" class="mt-2" />
     </div>
 </template>
 
