@@ -21,6 +21,16 @@
                         label: 'Location',
                         format: 'obj_link',
                     },
+                    {
+                        key: 'asset_count',
+                        label: 'Assets',
+                        format: 'count',
+                    },
+                    {
+                        key: 'asset_count_all',
+                        label: 'Asset Total',
+                        format: 'count',
+                    },
                 ]"
                 :data="$page.props.locations"
                 :actions="['edit', 'delete']"

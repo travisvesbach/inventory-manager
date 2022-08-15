@@ -58,7 +58,7 @@
                     if(header.format == 'boolean' && !isNaN(search_value)) {
                         search_value = search_value ? (header.true_text ?? null) : (header.false_text ?? null);
                     }
-                    if(search_value && search_value.toLowerCase().includes(searching)) {
+                    if(search_value && search_value.toString().toLowerCase().includes(searching)) {
                         return true;
                     }
                 }
@@ -126,12 +126,12 @@
 
     function highlight(content) {
         if(!content) {
-            return '';
+            return empty_char;
         }
         if(!search.value) {
             return content;
         }
-        return content.replace(new RegExp(search.value, "gi"), match => {
+        return content.toString().replace(new RegExp(search.value, "gi"), match => {
             return '<span class="highlight">' + match + '</span>';
         });
     }
@@ -278,6 +278,10 @@
                             <span class="text-lg"
                                 v-html="content(formatBoolean(item[header.key], header))"
                                 v-else-if="header.format == 'boolean'"/>
+                            <!-- count -->
+                            <span class="text-lg"
+                                v-html="content(item[header.key])"
+                                v-else-if="header.format == 'count'"/>
                             <!-- text -->
                             <span class="text-lg"
                                 v-html="content(item[header.key])"

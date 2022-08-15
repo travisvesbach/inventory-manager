@@ -49,6 +49,17 @@
                             <i :class="category.icon"/>
                         </td>
                     </tr>
+                    <tr v-if="category.icon">
+                        <td>
+                            Asset Count:
+                        </td>
+                        <td>
+                            {{ category.asset_count }}
+                            <span title="including all subcategories" v-if="category.asset_count_all">
+                                ({{ category.asset_count_all }})
+                            </span>
+                        </td>
+                    </tr>
                 </table>
             </CardDetails>
             <Card class="w-full my-4 md:mb-0" v-if="category.subcategories.length > 0">
@@ -66,6 +77,11 @@
                             key: 'icon',
                             label: 'Icon',
                             format: 'icon',
+                        },
+                        {
+                            key: 'asset_count',
+                            label: 'Assets',
+                            format: 'count',
                         },
                     ]"
                     :data="category.subcategories"

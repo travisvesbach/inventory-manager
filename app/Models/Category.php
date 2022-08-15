@@ -22,6 +22,8 @@ class Category extends Model
 
     protected $appends = [
         'path',
+        'asset_count',
+        'asset_count_all'
     ];
 
     public function path() {
@@ -49,11 +51,24 @@ class Category extends Model
     }
 
     // includes assets from subcategories
+    public function assetsRecursive($query) {
+        foreach($this->subcategories as $subcategory) {
+            $query->orWhere('category_id', $subcategory->id);
+            $query = $subcategory->assetsRecursive($query);
+        }
+        return $query;
+    }
+
     public function allAssets() {
         $query = Asset::where('category_id', $this->id);
-        foreach($this->allSubcategories as $subcategory) {
-            $query->orWhere('category_id', $subcategory->id);
-        }
-        return $query->orderBy('name')->withRelationships()->get();
+        return $this->assetsRecursive($query)->orderBy('name')->withRelationships()->get();
+    }
+
+    public function getAssetCountAttribute() {
+        return $this->assets()->count();
+    }
+
+    public function getAssetCountAllAttribute() {
+        return $this->allAssets()->count();
     }
 }

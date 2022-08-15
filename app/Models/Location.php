@@ -29,6 +29,8 @@ class Location extends Model
 
     protected $appends = [
         'path',
+        'asset_count',
+        'asset_count_all'
     ];
 
     public function path() {
@@ -55,12 +57,25 @@ class Location extends Model
         return $this->hasMany(Asset::class, 'location_id', 'id')->withRelationships();
     }
 
-    // includes assets from sublocations
+    // includes assets from locations
+    public function assetsRecursive($query) {
+        foreach($this->locations as $location) {
+            $query->orWhere('location_id', $location->id);
+            $query = $location->assetsRecursive($query);
+        }
+        return $query;
+    }
+
     public function allAssets() {
         $query = Asset::where('location_id', $this->id);
-        foreach($this->allLocations as $location) {
-            $query->orWhere('location_id', $location->id);
-        }
-        return $query->orderBy('name')->withRelationships()->get();
+        return $this->assetsRecursive($query)->orderBy('name')->withRelationships()->get();
+    }
+
+    public function getAssetCountAttribute() {
+        return $this->assets()->count();
+    }
+
+    public function getAssetCountAllAttribute() {
+        return $this->allAssets()->count();
     }
 }

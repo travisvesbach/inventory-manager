@@ -73,6 +73,11 @@
                             label: 'Name',
                             format: 'link',
                         },
+                        {
+                            key: 'asset_count',
+                            label: 'Assets',
+                            format: 'count',
+                        },
                     ]"
                     :data="location.locations"
                     route_slug="locations"
