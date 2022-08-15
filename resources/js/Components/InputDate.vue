@@ -55,6 +55,8 @@
             inputClassName="form-input hover:!border-zinc-800 text-color"
             teleport="#layout"
             :dark="darkMode"
+            :transitions="false"
+            :hideInputIcon="true"
         >
         </Datepicker>
         <JetInputError :message="error" class="mt-2" />

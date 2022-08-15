@@ -47,7 +47,20 @@ class Location extends Model
         return $this->hasMany(Location::class, 'location_id', 'id');
     }
 
+    public function allLocations() {
+        return $this->locations()->with('allLocations');
+    }
+
     public function assets() {
-        return $this->hasMany(Asset::class, 'location_id', 'id');
+        return $this->hasMany(Asset::class, 'location_id', 'id')->withRelationships();
+    }
+
+    // includes assets from sublocations
+    public function allAssets() {
+        $query = Asset::where('location_id', $this->id);
+        foreach($this->allLocations as $location) {
+            $query->orWhere('location_id', $location->id);
+        }
+        return $query->orderBy('name')->withRelationships()->get();
     }
 }

@@ -30,7 +30,8 @@ class CategoriesController extends Controller
 
     public function show(Category $category) {
         $category->load(['category', 'subcategories', 'assets']);
-        return Inertia::render('Categories/Show', compact(['category']));
+        $all_assets = $category->allAssets()->toArray();
+        return Inertia::render('Categories/Show', compact(['category', 'all_assets']));
     }
 
     public function edit(Category $category) {

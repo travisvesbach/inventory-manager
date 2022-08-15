@@ -45,6 +45,15 @@ class Category extends Model
     }
 
     public function assets() {
-        return $this->hasMany(Asset::class, 'category_id', 'id');
+        return $this->hasMany(Asset::class, 'category_id', 'id')->withRelationships();
+    }
+
+    // includes assets from subcategories
+    public function allAssets() {
+        $query = Asset::where('category_id', $this->id);
+        foreach($this->allSubcategories as $subcategory) {
+            $query->orWhere('category_id', $subcategory->id);
+        }
+        return $query->orderBy('name')->withRelationships()->get();
     }
 }

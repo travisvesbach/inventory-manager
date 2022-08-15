@@ -1,6 +1,6 @@
 <template>
     <div class="shadow sm:rounded-lg mx-auto card text-color">
-        <div class="p-3 text-lg overflow-hidden sm:rounded-t-lg card-header-footer" v-if="$slots.header">
+        <div class="p-3 text-lg overflow-hidden sm:rounded-t-lg card-header-footer leading-8" v-if="$slots.header">
             <slot name="header"></slot>
         </div>
 

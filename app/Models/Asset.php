@@ -49,4 +49,18 @@ class Asset extends Model
     public function location() {
         return $this->belongsTo(Location::class, 'location_id');
     }
+
+    public function scopeWithRelationships($query)
+    {
+        $relationships = [
+            'category',
+            'location'
+        ];
+        foreach($relationships as $relationship) {
+            $query->with([$relationship => function($query) {
+                $query->select('id', 'name');
+            }]);
+        }
+        return $query;
+    }
 }

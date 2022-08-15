@@ -30,7 +30,8 @@ class LocationsController extends Controller
 
     public function show(Location $location) {
         $location->load(['location', 'locations', 'assets']);
-        return Inertia::render('Locations/Show', compact(['location']));
+        $all_assets = $location->allAssets()->toArray();
+        return Inertia::render('Locations/Show', compact(['location', 'all_assets']));
     }
 
     public function edit(Location $location) {
