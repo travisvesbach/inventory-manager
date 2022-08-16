@@ -11,12 +11,12 @@ use App\Http\Requests\CategoryRequest;
 class CategoriesController extends Controller
 {
     public function index() {
-        $categories = Category::orderBy('name')->with('category')->get();
+        $categories = Category::orderBy('name')->with('parent')->get();
         return Inertia::render('Categories/Index', compact(['categories']));
     }
 
     public function create() {
-        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
+        $categories = Category::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         return Inertia::render('Categories/Edit', compact(['categories']));
     }
 
@@ -29,13 +29,13 @@ class CategoriesController extends Controller
     }
 
     public function show(Category $category) {
-        $category->load(['category', 'subcategories', 'assets']);
+        $category->load(['parent', 'children', 'assets']);
         $all_assets = $category->allAssets()->toArray();
         return Inertia::render('Categories/Show', compact(['category', 'all_assets']));
     }
 
     public function edit(Category $category) {
-        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
+        $categories = Category::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         return Inertia::render('Categories/Edit', ['editing' => $category, 'categories' => $categories]);
     }
 

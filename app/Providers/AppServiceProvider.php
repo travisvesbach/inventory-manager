@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
         Inertia::share('categories_top', function () {
-            return \App\Models\Category::whereNull('category_id')->with('allSubcategories')->orderBy('name')->get();
+            return \App\Models\Category::whereNull('parent_id')->with('allChildren')->orderBy('name')->get();
         });
     }
 

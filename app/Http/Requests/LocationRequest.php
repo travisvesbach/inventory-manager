@@ -25,7 +25,7 @@ class LocationRequest extends FormRequest
     {
         return [
             'name'              => 'required|max:255',
-            'location_id'       => 'nullable|integer|not_in:' . ($this->id ?? null),
+            'parent_id'         => 'nullable|integer|not_in:' . ($this->id ?? null),
             'address'           => 'nullable|max:255',
             'address_secondary' => 'nullable|max:255',
             'city'              => 'nullable|max:255',

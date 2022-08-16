@@ -44,12 +44,12 @@
                             Parent Location:
                         </td>
                         <td>
-                            <Link :href="location.location.path"
+                            <Link :href="location.parent.path"
                                 class="text-lg link-color"
-                                v-html="location.location.name"/>
+                                v-html="location.parent.name"/>
                         </td>
                     </tr>
-                    <tr valign="top">
+                    <tr valign="top" v-if="addressSet">
                         <td>
                             Address
                         </td>
@@ -62,7 +62,7 @@
                     </tr>
                 </table>
             </CardDetails>
-            <Card class="w-full my-4 md:mb-0" v-if="location.locations.length > 0">
+            <Card class="w-full my-4 md:mb-0" v-if="location.children.length > 0">
                 <template #header>
                     Locations
                 </template>
@@ -79,7 +79,7 @@
                             format: 'count',
                         },
                     ]"
-                    :data="location.locations"
+                    :data="location.children"
                     route_slug="locations"
                     :searchable="false"
                 />

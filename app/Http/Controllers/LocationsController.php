@@ -11,12 +11,12 @@ use App\Http\Requests\LocationRequest;
 class LocationsController extends Controller
 {
     public function index() {
-        $locations = Location::orderBy('name')->with('location')->get();
+        $locations = Location::orderBy('name')->with('parent')->get();
         return Inertia::render('Locations/Index', compact(['locations']));
     }
 
     public function create() {
-        $locations = Location::select(['id', 'name', 'location_id'])->orderBy('name')->get();
+        $locations = Location::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         return Inertia::render('Locations/Edit', compact(['locations']));
     }
 
@@ -29,13 +29,13 @@ class LocationsController extends Controller
     }
 
     public function show(Location $location) {
-        $location->load(['location', 'locations', 'assets']);
+        $location->load(['parent', 'children', 'assets']);
         $all_assets = $location->allAssets()->toArray();
         return Inertia::render('Locations/Show', compact(['location', 'all_assets']));
     }
 
     public function edit(Location $location) {
-        $locations = Location::select(['id', 'name', 'location_id'])->orderBy('name')->get();
+        $locations = Location::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         return Inertia::render('Locations/Edit', ['editing' => $location, 'locations' => $locations]);
     }
 

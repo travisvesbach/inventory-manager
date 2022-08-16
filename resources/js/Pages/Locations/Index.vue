@@ -16,7 +16,7 @@
                         format: 'link',
                     },
                     {
-                        key: 'location',
+                        key: 'parent',
                         subkey: 'name',
                         label: 'Location',
                         format: 'obj_link',

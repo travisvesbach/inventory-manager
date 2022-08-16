@@ -16,7 +16,7 @@
                         format: 'link',
                     },
                     {
-                        key: 'category',
+                        key: 'parent',
                         subkey: 'name',
                         label: 'Category',
                         format: 'obj_link',

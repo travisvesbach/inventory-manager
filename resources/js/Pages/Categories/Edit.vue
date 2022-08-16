@@ -16,7 +16,7 @@
     const form = useForm({
         id: (props.editing ? props.editing.id : null),
         name: (props.editing ? props.editing.name : null),
-        category_id: (props.editing ? props.editing.category_id : null),
+        parent_id: (props.editing ? props.editing.parent_id : null),
         icon: (props.editing ? props.editing.icon : null),
     });
 
@@ -33,7 +33,7 @@
     <AppLayout :title="editing && editing.name ? 'Edit Category: ' + editing.name : 'Create Category'">
         <Form :form="form" @submitted="submit">
             <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
-            <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="categories" option_value="id" option_label="name" :disabled="categories.length == 0 ? true : false" />
+            <InputSelect id="parent_id" label="Parent Category" v-model="form.parent_id" :error="form.errors.parent_id" :options="categories" option_value="id" option_label="name" :disabled="categories.length == 0 ? true : false" />
             <InputText id="icon" label="Icon" v-model="form.icon" :error="form.errors.icon"/>
         </Form>
     </AppLayout>

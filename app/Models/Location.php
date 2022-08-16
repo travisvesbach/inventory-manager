@@ -16,7 +16,7 @@ class Location extends Model
 
     protected $fillable = [
         'name',
-        'location_id',
+        'parent_id',
         'address',
         'address_secondary',
         'city',
@@ -41,16 +41,16 @@ class Location extends Model
         return $this->path();
     }
 
-    public function location() {
-        return $this->belongsTo(Location::class, 'location_id');
+    public function parent() {
+        return $this->belongsTo(Location::class, 'parent_id');
     }
 
-    public function locations() {
-        return $this->hasMany(Location::class, 'location_id', 'id');
+    public function children() {
+        return $this->hasMany(Location::class, 'parent_id', 'id');
     }
 
-    public function allLocations() {
-        return $this->locations()->with('allLocations');
+    public function allChildren() {
+        return $this->children()->with('allChildren');
     }
 
     public function assets() {
@@ -59,9 +59,9 @@ class Location extends Model
 
     // includes assets from locations
     public function assetsRecursive($query) {
-        foreach($this->locations as $location) {
-            $query->orWhere('location_id', $location->id);
-            $query = $location->assetsRecursive($query);
+        foreach($this->children as $child) {
+            $query->orWhere('location_id', $child->id);
+            $query = $child->assetsRecursive($query);
         }
         return $query;
     }

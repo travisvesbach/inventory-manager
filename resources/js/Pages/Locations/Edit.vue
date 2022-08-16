@@ -20,7 +20,7 @@
     const form = useForm({
         id: (props.editing ? props.editing.id : null),
         name: (props.editing ? props.editing.name : null),
-        location_id: (props.editing ? props.editing.location_id : null),
+        parent_id: (props.editing ? props.editing.parent_id : null),
         address: (props.editing ? props.editing.address : null),
         address_secondary: (props.editing ? props.editing.address_secondary : null),
         city: (props.editing ? props.editing.city : null),
@@ -44,7 +44,7 @@
     <AppLayout :title="editing && editing.name ? 'Edit Location: ' + editing.name : 'Create Location'">
         <Form :form="form" @submitted="submit">
             <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
-            <InputSelect id="location_id" label="Location" v-model="form.location_id" :error="form.errors.location_id" :options="locations" option_value="id" option_label="name" :disabled="locations.length == 0 ? true : false" />
+            <InputSelect id="parent_id" label="Location" v-model="form.parent_id" :error="form.errors.parent_id" :options="locations" option_value="id" option_label="name" :disabled="locations.length == 0 ? true : false" />
             <InputText id="address" label="Address" v-model="form.address" :error="form.errors.address"/>
             <InputText id="address_secondary" label="Address 2" v-model="form.address_secondary" :error="form.errors.address_secondary"/>
             <InputText id="city" label="City" v-model="form.city" :error="form.errors.city"/>

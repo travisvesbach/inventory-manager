@@ -19,7 +19,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->string('name');
-            $table->foreignId('location_id')->nullable()->default(null);
+            $table->foreignId('parent_id')->nullable()->default(null);
             $table->string('address')->nullable()->default(null);
             $table->string('address_secondary')->nullable()->default(null);
             $table->string('city')->nullable()->default(null);

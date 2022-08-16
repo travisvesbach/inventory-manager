@@ -12,12 +12,12 @@
 
 <template>
     <div>
-        <SidebarAccordionItem :id="category.name.toLowerCase()" :title="category.name" :icon="category.icon" v-if="category.all_subcategories.length > 0">
+        <SidebarAccordionItem :id="category.name.toLowerCase()" :title="category.name" :icon="category.icon" v-if="category.all_children.length > 0">
 
 
             <Accordion>
                 <SidebarLink :href="route('categories.show', category.id)" :text="'All ' + category.name" />
-                <SidebarCategoryItem :category="subcategory" v-for="subcategory in category.all_subcategories" />
+                <SidebarCategoryItem :category="subcategory" v-for="subcategory in category.all_children" />
             </Accordion>
 
         </SidebarAccordionItem>

@@ -16,7 +16,7 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'category_id',
+        'parent_id',
         'icon',
     ];
 
@@ -34,27 +34,27 @@ class Category extends Model
         return $this->path();
     }
 
-    public function category() {
-        return $this->belongsTo(Category::class, 'category_id');
+    public function parent() {
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function subcategories() {
-        return $this->hasMany(Category::class, 'category_id', 'id');
+    public function children() {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function allSubcategories() {
-        return $this->subcategories()->with('allSubcategories');
+    public function allChildren() {
+        return $this->children()->with('allChildren');
     }
 
     public function assets() {
         return $this->hasMany(Asset::class, 'category_id', 'id')->withRelationships();
     }
 
-    // includes assets from subcategories
+    // includes assets from children
     public function assetsRecursive($query) {
-        foreach($this->subcategories as $subcategory) {
-            $query->orWhere('category_id', $subcategory->id);
-            $query = $subcategory->assetsRecursive($query);
+        foreach($this->children as $child) {
+            $query->orWhere('category_id', $child->id);
+            $query = $child->assetsRecursive($query);
         }
         return $query;
     }

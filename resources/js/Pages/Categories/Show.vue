@@ -31,14 +31,14 @@
                             {{ category.name }}
                         </td>
                     </tr>
-                    <tr v-if="category.category">
+                    <tr v-if="category.parent">
                         <td>
                             Parent Category:
                         </td>
                         <td>
-                            <Link :href="category.category.path"
+                            <Link :href="category.parent.path"
                                 class="text-lg link-color"
-                                v-html="category.category.name"/>
+                                v-html="category.parent.name"/>
                         </td>
                     </tr>
                     <tr v-if="category.icon">
@@ -62,7 +62,7 @@
                     </tr>
                 </table>
             </CardDetails>
-            <Card class="w-full my-4 md:mb-0" v-if="category.subcategories.length > 0">
+            <Card class="w-full my-4 md:mb-0" v-if="category.children.length > 0">
                 <template #header>
                     Subcategories
                 </template>
@@ -84,7 +84,7 @@
                             format: 'count',
                         },
                     ]"
-                    :data="category.subcategories"
+                    :data="category.children"
                     route_slug="categories"
                     :searchable="false"
                 />
