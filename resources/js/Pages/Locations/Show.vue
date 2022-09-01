@@ -39,7 +39,7 @@
                             {{ location.name }}
                         </td>
                     </tr>
-                    <tr v-if="addressSet">
+                    <tr v-if="location.parent">
                         <td>
                             Parent Location:
                         </td>

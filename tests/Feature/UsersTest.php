@@ -44,7 +44,6 @@ class UsersTest extends TestCase
 
     /** @test **/
     public function non_admins_cannot_manage_users() {
-        // $admin_user = User::factory()->create();
         $this->signIn();
 
         $this->get('/users')->assertStatus(403);

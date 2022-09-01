@@ -19,7 +19,7 @@ class AssetFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'category_id' => Category::factory()->create(),
+            'category_id' => 1,
         ];
     }
 }

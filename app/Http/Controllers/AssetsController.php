@@ -37,7 +37,7 @@ class AssetsController extends Controller
     }
 
     public function edit(Asset $asset) {
-        $categories = Category::select(['id', 'name', 'category_id'])->orderBy('name')->get();
+        $categories = Category::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         $locations = Location::select(['id', 'name'])->orderBy('name')->get();
         return Inertia::render('Assets/Edit', ['editing' => $asset, 'categories' => $categories, 'locations' => $locations]);
     }

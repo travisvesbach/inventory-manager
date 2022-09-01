@@ -7,6 +7,11 @@ use App\Models\Asset;
 
 class AssetsTest extends TestCase
 {
+    protected function setUp(): void {
+        parent::setUp();
+        \App\Models\Category::factory()->create();
+    }
+
     /** @test **/
     public function guests_cannot_manage_assets() {
         $asset = Asset::factory()->create();

@@ -1,5 +1,5 @@
 <script setup>
-    import { inject} from 'vue'
+    import { inject, computed } from 'vue'
     import AccordionItem from '@/Components/AccordionItem.vue';
     import SidebarDivider from '@/Components/SidebarDivider.vue';
 
@@ -8,10 +8,11 @@
     const props = defineProps({
         id: String,
         title: String,
-        icon: {
-            type: String,
-            default: 'fa-regular fa-circle',
-        }
+        icon: String,
+    })
+
+    const icon = computed(() => {
+        return props.icon ?? 'fa-regular fa-circle';
     })
 
 </script>
