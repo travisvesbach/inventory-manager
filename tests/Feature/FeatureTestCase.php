@@ -86,6 +86,13 @@ class FeatureTestCase extends TestCase
         }
     }
 
+    protected function fieldRequired($field) {
+        $this->signIn();
+
+        $attributes = $this->createAttributes([$field => null]);
+        $this->post(route($this->route . '.store'), $attributes)->assertSessionHasErrors($field);
+    }
+
     // assert that item with passed attributes exists in database
     protected function itemExistsWithAttributes($attributes) {
         $array = null;
@@ -98,7 +105,7 @@ class FeatureTestCase extends TestCase
         $this->assertDatabaseHas($this->model, $array);
     }
 
-    protected function createAttributes() {
-        return $this->model::factory()->raw();
+    protected function createAttributes($overrides = []) {
+        return $this->model::factory()->raw($overrides);
     }
 }

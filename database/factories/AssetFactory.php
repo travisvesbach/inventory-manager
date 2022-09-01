@@ -18,8 +18,12 @@ class AssetFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
-            'category_id' => 1,
+            'name'              => $this->faker->word(),
+            'acquisition_date'  => $this->faker->date(),
+            'acquisition_price' => $this->faker->randomFloat(2, 1, 1000),
+            'info_url'          => $this->faker->url(),
+            'notes'             => $this->faker->text(),
+            'category_id'       => 1,
         ];
     }
 }

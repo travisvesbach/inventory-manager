@@ -50,4 +50,9 @@ class LocationsTest extends FeatureTestCase
     public function a_user_can_bulk_delete_locations() {
         $this->userCanBulkDelete();
     }
+
+    /** @test **/
+    public function a_loaction_requires_a_name() {
+        $this->fieldRequired('name');
+    }
 }

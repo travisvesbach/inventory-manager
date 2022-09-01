@@ -48,11 +48,7 @@ class CategoriesTest extends FeatureTestCase
 
     /** @test **/
     public function a_category_requires_a_name() {
-        $this->signIn();
-
-        $attributes = Category::factory()->raw(['name' => '']);
-
-        $this->post(route('categories.store'), $attributes)->assertSessionHasErrors('name');
+        $this->fieldRequired('name');
     }
 
 }
