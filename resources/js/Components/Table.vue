@@ -212,13 +212,14 @@
             </div>
             <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="searchable"/>
         </div>
-        <div class="w-full overflow-x-scroll">
-            <table class="w-full mt-2">
+        <div class="w-full flex">
+            <div class="w-full flex overflow-x-scroll">
+            <table class="w-full mt-2 overflow-x-scroll">
                 <thead>
-                    <tr class="border-b-2 border-color" v-if="headers">
+                    <tr class="h-10 border-b-2 border-color" v-if="headers">
                         <th class="flex" v-if="actions">
                             <!-- dropdown -->
-                            <JetDropdown align="left" width="48" class="">
+                            <JetDropdown align="left" width="48" class="sticky">
                                 <template #trigger>
                                     <button class="ml-auto flex link link-color">
                                         <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -247,7 +248,7 @@
                             </button>
 
                         </th>
-                        <th class="p-1 text-left cursor-pointer" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
+                        <th class="py-1 px-2 text-left cursor-pointer whitespace-nowrap" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -260,7 +261,7 @@
                         <td v-if="actions">
                             <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
                         </td>
-                        <td class="py-2 px-1" v-for="header in headers">
+                        <td class="py-2 px-1 mr2" v-for="header in headers">
                             <!-- link -->
                             <Link :href="item.path"
                                 class="text-lg link link-color"
@@ -287,7 +288,20 @@
                                 v-html="content(item[header.key])"
                                 v-else/>
                         </td>
-                        <td class="py-2 px-1 flex justify-end" v-if="actions">
+
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <table class="mt-2" v-if="paginated_data.length > 0">
+                <thead>
+                    <tr class="border-b-2 border-color h-10" v-if="headers">
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b-2 border-color" v-for="item in paginated_data">
+                        <td class="py-2 px-1 flex justify-end sticky right-2" v-if="actions">
                             <Link :href="route(route_slug + '.edit', item.id)"
                                 class="btn btn-sm btn-square btn-primary"
                                 title="Edit"

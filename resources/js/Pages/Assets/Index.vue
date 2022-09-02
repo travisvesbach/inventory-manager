@@ -27,6 +27,14 @@
                         label: 'Location',
                         format: 'obj_link',
                     },
+                    {
+                        key: 'acquisition_date',
+                        label: 'Acquisition Date',
+                    },
+                    {
+                        key: 'acquisition_price',
+                        label: 'Acquisition Price',
+                    },
                 ]"
                 :data="$page.props.assets"
                 :actions="['edit', 'delete']"

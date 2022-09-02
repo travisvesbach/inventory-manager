@@ -76,7 +76,7 @@ provide('showingLeftSidebar', showingLeftSidebar);
             </Accordion>
         </div>
 
-        <div class="w-full text-color">
+        <div class="w-full text-color" style="max-width: calc(100% - 50px);;">
 
             <Head :title="title" />
 
