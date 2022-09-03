@@ -34,6 +34,7 @@
     const per_page      = ref(20);
     const selected      = ref([]);
     const deleting      = ref(null);
+    const hierarchy_sort    = ref(true);
 
     const form_delete   = useForm({
         id: null,
@@ -68,6 +69,7 @@
 
         let sort = (sort_key.value ?? props.headers[0].key);
         let sort_subkey = (props.headers.find(obj => obj.key === sort).subkey ?? false)
+
         if(!sort_reverse.value) {
             filtered.sort(function(a, b) {
                 let a_sort = (a[sort] != null && sort_subkey ? a[sort][sort_subkey] : a[sort]);
@@ -101,6 +103,11 @@
                 }
             });
         }
+
+        if(!search.value && typeof filtered[0].parent_id !== 'undefined' && hierarchy_sort.value === true) {
+            filtered = sortByHierarchy(filtered);
+        }
+
         return filtered;
     })
 
@@ -202,6 +209,27 @@
             }
         }
     }
+
+    function sortByHierarchy(input, root = null) {
+        // build tree
+        let output = [];
+        let obj = {};
+        input.forEach(function(item) {
+            obj[item.id] = { data: item, children: obj[item.id] && obj[item.id].children };
+            if (item.parent_id === root) {
+                output.push(obj[item.id]);
+            } else {
+                obj[item.parent_id] = obj[item.parent_id] || {};
+                obj[item.parent_id].children = obj[item.parent_id].children || [];
+                obj[item.parent_id].children.push(obj[item.id]);
+            }
+        });
+
+        // flatten
+        return output.reduce(function traverse(output, a) {
+            return output.concat(a.data, (a.children || []).reduce(traverse, []));
+        }, [])
+    };
 </script>
 
 <template>
@@ -245,6 +273,16 @@
                                 :disabled="selected.length == 0"
                                 v-if="actions && actions.includes('delete')">
                                 <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                            <button @click="hierarchy_sort = !hierarchy_sort"
+                                class="btn btn-sm btn-square btn-primary ml-auto"
+                                :class="hierarchy_sort ? '' : 'opacity-75'"
+                                title="Toggle hierarchy sort"
+                                as="button"
+                                :disabled="search == ''"
+                                v-if="paginated_data.length > 0 && typeof paginated_data[0].parent_id !== 'undefined'">
+                                <i class="fa-solid fa-sitemap"></i>
                             </button>
 
                         </th>

@@ -47,5 +47,4 @@
             </Table>
         </Card>
     </AppLayout>
-
 </template>
