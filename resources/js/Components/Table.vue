@@ -27,14 +27,14 @@
 
     const empty_char = '&#8212';
 
-    const search        = ref(null);
+    const search        = ref('');
     const sort_key      = ref(null);
     const sort_reverse  = ref(false);
     const page_number   = ref(1);
     const per_page      = ref(20);
     const selected      = ref([]);
     const deleting      = ref(null);
-    const hierarchy_sort    = ref(true);
+    const hierarchy_sort    = ref(false);
 
     const form_delete   = useForm({
         id: null,
@@ -104,7 +104,7 @@
             });
         }
 
-        if(!search.value && typeof filtered[0].parent_id !== 'undefined' && hierarchy_sort.value === true) {
+        if(!search.value && filtered.length > 0 && typeof filtered[0].parent_id !== 'undefined' && hierarchy_sort.value === true) {
             filtered = sortByHierarchy(filtered);
         }
 
@@ -238,7 +238,18 @@
             <div>
                 <slot></slot>
             </div>
-            <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="searchable"/>
+            <div>
+                <JetInput class="p-1" type="text" v-model="search" placeholder="search" v-if="searchable"/>
+                <button @click="hierarchy_sort = !hierarchy_sort"
+                    class="btn btn-sm btn-square btn-primary ml-2"
+                    :class="hierarchy_sort ? '' : 'opacity-75'"
+                    :title="'Toggle hierarchy sort' + (search != '' ? '(not available when searching)' : '')"
+                    as="button"
+                    :disabled="search != ''"
+                    v-if="data.length > 0 && typeof data[0].parent_id !== 'undefined'">
+                    <i class="fa-solid fa-sitemap"></i>
+                </button>
+            </div>
         </div>
         <div class="w-full flex">
             <div class="w-full flex overflow-x-scroll">
@@ -274,17 +285,6 @@
                                 v-if="actions && actions.includes('delete')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
-
-                            <button @click="hierarchy_sort = !hierarchy_sort"
-                                class="btn btn-sm btn-square btn-primary ml-auto"
-                                :class="hierarchy_sort ? '' : 'opacity-75'"
-                                title="Toggle hierarchy sort"
-                                as="button"
-                                :disabled="search == ''"
-                                v-if="paginated_data.length > 0 && typeof paginated_data[0].parent_id !== 'undefined'">
-                                <i class="fa-solid fa-sitemap"></i>
-                            </button>
-
                         </th>
                         <th class="py-1 px-2 text-left cursor-pointer whitespace-nowrap" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
                     </tr>

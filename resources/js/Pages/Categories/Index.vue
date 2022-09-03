@@ -27,13 +27,8 @@
                         format: 'icon',
                     },
                     {
-                        key: 'asset_count',
-                        label: 'Assets',
-                        format: 'count',
-                    },
-                    {
                         key: 'asset_count_all',
-                        label: 'Asset Total',
+                        label: 'Assets',
                         format: 'count',
                     },
                 ]"

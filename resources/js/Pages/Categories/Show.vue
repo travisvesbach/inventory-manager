@@ -79,7 +79,7 @@
                             format: 'icon',
                         },
                         {
-                            key: 'asset_count',
+                            key: 'asset_count_all',
                             label: 'Assets',
                             format: 'count',
                         },

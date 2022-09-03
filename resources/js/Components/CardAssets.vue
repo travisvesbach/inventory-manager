@@ -14,7 +14,7 @@
         },
     })
 
-    const showing_all = ref(false);
+    const showing_all = ref(true);
 </script>
 <template>
     <Card class="w-full" v-if="assets">
