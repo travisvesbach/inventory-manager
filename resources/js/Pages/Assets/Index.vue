@@ -35,6 +35,16 @@
                         key: 'acquisition_price',
                         label: 'Acquisition Price',
                     },
+                    {
+                        key: 'parent',
+                        subkey: 'name',
+                        label: 'Assigned To',
+                        format: 'obj_link',
+                    },
+                    {
+                        key: 'checkout_date',
+                        label: 'Checkout Date',
+                    },
                 ]"
                 :data="$page.props.assets"
                 :actions="['edit', 'delete']"

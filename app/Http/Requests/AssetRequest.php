@@ -33,6 +33,8 @@ class AssetRequest extends FormRequest
             'disposition_price' => 'nullable|numeric|between:0,999999.99',
             'info_url'          => 'max:255',
             'notes'             => '',
+            'parent_id'         => 'nullable|integer|not_in:' . ($this->id ?? null),
+            'checkout_date'     => 'nullable|date',
         ];
     }
 }

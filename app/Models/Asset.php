@@ -23,6 +23,8 @@ class Asset extends Model
         'disposition_price',
         'info_url',
         'notes',
+        'parent_id',
+        'checkout_date',
     ];
 
     protected $appends = [
@@ -50,11 +52,33 @@ class Asset extends Model
         return $this->belongsTo(Location::class, 'location_id');
     }
 
+    public function parent() {
+        return $this->belongsTo(Asset::class, 'parent_id');
+    }
+
+    public function children() {
+        return $this->hasMany(Asset::class, 'parent_id', 'id');
+    }
+
+    public function childrenRecursive($query) {
+        foreach($this->children as $child) {
+            $query->orWhere('parent_id', $child->id);
+            $query = $child->childrenRecursive($query);
+        }
+        return $query;
+    }
+
+    public function allChildren() {
+        $query = Asset::where('parent_id', $this->id);
+        return $this->childrenRecursive($query)->orderBy('name')->withRelationships()->get();
+    }
+
     public function scopeWithRelationships($query)
     {
         $relationships = [
             'category',
-            'location'
+            'location',
+            'parent'
         ];
         foreach($relationships as $relationship) {
             $query->with([$relationship => function($query) {

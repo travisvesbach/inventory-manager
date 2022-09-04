@@ -27,7 +27,7 @@ return new class extends Migration
             $table->decimal('disposition_price', 16, 2)->nullable()->default(null);
             $table->string('info_url')->nullable()->default(null);
             $table->text('notes')->nullable()->default(null);
-            $table->foreignId('asset_id')->nullable()->default(null);
+            $table->foreignId('parent_id')->nullable()->default(null);
             $table->date('checkout_date')->nullable()->default(null);
         });
     }

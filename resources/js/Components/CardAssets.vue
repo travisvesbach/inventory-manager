@@ -12,6 +12,10 @@
             type: Array,
             default: null
         },
+        hierarchy_root: {
+            type: Number,
+            default: null
+        },
     })
 
     const showing_all = ref(true);
@@ -28,7 +32,7 @@
                         class="btn btn-sm btn-primary"
                         title="Show All Assets"
                         as="button"
-                        v-if="all_assets.length != assets.length">
+                        v-if="all_assets && all_assets.length != assets.length">
                         {{ showing_all ? 'hide' : 'Include' }} child assets
                     </button>
                 </div>
@@ -53,9 +57,16 @@
                     label: 'Location',
                     format: 'obj_link',
                 },
+                {
+                    key: 'parent',
+                    subkey: 'name',
+                    label: 'Assigned To',
+                    format: 'obj_link',
+                },
             ]"
             :data="all_assets && showing_all ? all_assets : assets"
             route_slug="assets"
+            :hierarchy_root="hierarchy_root"
         />
     </Card>
 </template>

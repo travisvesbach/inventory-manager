@@ -73,12 +73,12 @@ class AssetsTest extends FeatureTestCase
         $checkout_date = $this->faker->date();
         $this->actingAs($user)
             ->post(route($this->route . '.checkout', $asset), [
-                'asset_id'      => $checkout_to->id,
+                'parent_id'      => $checkout_to->id,
                 'checkout_date' => $checkout_date,
             ])
             ->assertRedirect(route($this->route . '.show', $asset->id));
 
-        $this->assertEquals($asset->refresh()->asset_id, $checkout_to->id);
+        $this->assertEquals($asset->refresh()->parent_id, $checkout_to->id);
         $this->assertEquals($asset->refresh()->checkout_date, $checkout_date);
     }
 }

@@ -14,6 +14,7 @@
         },
         categories: Array,
         locations: Array,
+        assets: Array,
     })
 
     const form = useForm({
@@ -27,6 +28,8 @@
         disposition_price: (props.editing ? props.editing.disposition_price : null),
         info_url: (props.editing ? props.editing.info_url : null),
         notes: (props.editing ? props.editing.notes : null),
+        parent_id: (props.editing ? props.editing.parent_id : null),
+        checkout_date: (props.editing ? props.editing.checkout_date : null),
     });
 
     function submit() {
@@ -50,6 +53,8 @@
             <InputText id="disposition_price" label="Disposition Price" type="number" step="0.01" min="0" max="999999.99" v-model="form.disposition_price" :error="form.errors.disposition_price" />
             <InputText id="info_url" label="Info URL" v-model="form.info_url" :error="form.errors.info_url" />
             <InputTextarea id="notes" label="Notes" v-model="form.notes" :error="form.errors.notes" />
+            <InputSelect id="parent_id" label="Checkout To" v-model="form.parent_id" :error="form.errors.parent_id" :options="assets" option_value="id" option_label="name" :disabled="assets.length == 0 ? true : false" />
+            <InputDate id="checkout_date" label="Checkout Date" v-model="form.checkout_date" :error="form.errors.checkout_date" />
         </Form>
     </AppLayout>
 

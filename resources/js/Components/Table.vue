@@ -23,6 +23,10 @@
             type: Boolean,
             default: true
         },
+        hierarchy_root: {
+            type: Number,
+            default: null
+        },
     })
 
     const empty_char = '&#8212';
@@ -210,13 +214,13 @@
         }
     }
 
-    function sortByHierarchy(input, root = null) {
+    function sortByHierarchy(input) {
         // build tree
         let output = [];
         let obj = {};
         input.forEach(function(item) {
             obj[item.id] = { data: item, children: obj[item.id] && obj[item.id].children };
-            if (item.parent_id === root) {
+            if (item.parent_id === props.hierarchy_root) {
                 output.push(obj[item.id]);
             } else {
                 obj[item.parent_id] = obj[item.parent_id] || {};

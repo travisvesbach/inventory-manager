@@ -9,18 +9,20 @@ use App\Models\User;
 use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Location;
+use Carbon\Carbon;
 
 class AssetsController extends Controller
 {
     public function index() {
-        $assets = Asset::orderBy('name')->with('category', 'location')->get();
+        $assets = Asset::orderBy('name')->with('category', 'location', 'parent')->get();
         return Inertia::render('Assets/Index', compact(['assets']));
     }
 
     public function create() {
         $categories = Category::select(['id', 'name'])->orderBy('name')->get();
         $locations = Location::select(['id', 'name'])->orderBy('name')->get();
-        return Inertia::render('Assets/Edit', compact(['categories', 'locations']));
+        $assets = Asset::select(['id', 'name'])->orderBy('name')->get();
+        return Inertia::render('Assets/Edit', compact(['categories', 'locations', 'assets']));
     }
 
     public function store(AssetRequest $request) {
@@ -32,14 +34,16 @@ class AssetsController extends Controller
     }
 
     public function show(Asset $asset) {
-        $asset->load(['category', 'location']);
-        return Inertia::render('Assets/Show', compact(['asset']));
+        $asset->load(['category', 'location', 'parent', 'children']);
+        $all_assets = $asset->allChildren()->toArray();
+        return Inertia::render('Assets/Show', compact(['asset', 'all_assets']));
     }
 
     public function edit(Asset $asset) {
         $categories = Category::select(['id', 'name', 'parent_id'])->orderBy('name')->get();
         $locations = Location::select(['id', 'name'])->orderBy('name')->get();
-        return Inertia::render('Assets/Edit', ['editing' => $asset, 'categories' => $categories, 'locations' => $locations]);
+        $assets = Asset::whereNot('id', $asset->id)->select(['id', 'name'])->orderBy('name')->get();
+        return Inertia::render('Assets/Edit', ['editing' => $asset, 'categories' => $categories, 'locations' => $locations, 'assets' => $assets]);
     }
 
     public function update(AssetRequest $request, Asset $asset) {
@@ -63,9 +67,9 @@ class AssetsController extends Controller
     }
 
     public function checkout(Asset $asset, Request $request) {
-        if($request->filled('asset_id')) {
-            $checkout_to = Asset::find($request->input('asset_id'));
-            $asset->asset_id = $checkout_to->id;
+        if($request->filled('parent_id')) {
+            $checkout_to = Asset::find($request->input('parent_id'));
+            $asset->parent_id = $checkout_to->id;
             $asset->checkout_date = $request->input('checkout_date') ?? null;
             $asset->save();
             return redirect(route('assets.show', $asset))->with(['flash_message' => $asset->name . ' checked out to ' . $checkout_to->name, 'flash_status' => 'success']);
