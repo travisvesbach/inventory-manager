@@ -63,4 +63,22 @@ class AssetsTest extends FeatureTestCase
     public function an_asset_requires_a_category() {
         $this->fieldRequired('category_id');
     }
+
+    /** @test **/
+    public function a_user_can_checkout_an_asset() {
+        $user = \App\Models\User::factory()->create();
+        $asset = $this->model::factory()->create();
+        $checkout_to = $this->model::factory()->create();
+
+        $checkout_date = $this->faker->date();
+        $this->actingAs($user)
+            ->post(route($this->route . '.checkout', $asset), [
+                'asset_id'      => $checkout_to->id,
+                'checkout_date' => $checkout_date,
+            ])
+            ->assertRedirect(route($this->route . '.show', $asset->id));
+
+        $this->assertEquals($asset->refresh()->asset_id, $checkout_to->id);
+        $this->assertEquals($asset->refresh()->checkout_date, $checkout_date);
+    }
 }

@@ -61,4 +61,14 @@ class AssetsController extends Controller
         }
         return redirect(route('assets.index'))->with(['flash_message' => count($request->input('ids')) . ' assets deleted', 'flash_status' => 'danger']);
     }
+
+    public function checkout(Asset $asset, Request $request) {
+        if($request->filled('asset_id')) {
+            $checkout_to = Asset::find($request->input('asset_id'));
+            $asset->asset_id = $checkout_to->id;
+            $asset->checkout_date = $request->input('checkout_date') ?? null;
+            $asset->save();
+            return redirect(route('assets.show', $asset))->with(['flash_message' => $asset->name . ' checked out to ' . $checkout_to->name, 'flash_status' => 'success']);
+        }
+    }
 }
