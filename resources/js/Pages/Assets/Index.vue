@@ -47,7 +47,7 @@
                     },
                 ]"
                 :data="$page.props.assets"
-                :actions="['edit', 'delete']"
+                :actions="['edit', 'delete', 'checkout']"
                 route_slug="assets"
             >
                 <Link :href="route('assets.create')" class="btn btn-primary" :as="'button'">

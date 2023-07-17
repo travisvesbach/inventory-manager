@@ -46,7 +46,7 @@
         <Form :form="form" @submitted="submit">
             <InputText id="name" label="Name" v-model="form.name" :error="form.errors.name" />
             <InputSelect id="category_id" label="Category" v-model="form.category_id" :error="form.errors.category_id" :options="categories" option_value="id" option_label="name" :disabled="categories.length == 0 ? true : false" />
-            <InputSelect id="location_id" label="Location" v-model="form.location_id" :error="form.errors.location_id" :options="locations" option_value="id" option_label="name" :disabled="locations.length == 0 ? true : false" />
+            <InputSelect id="location_id" label="Location" v-model="form.location_id" :error="form.errors.location_id" :options="locations" option_value="id" option_label="name" :disabled="locations.length == 0 || form.parent_id ? true : false" />
             <InputDate id="acquisition_date" label="Acquisition Date" v-model="form.acquisition_date" :error="form.errors.acquisition_date" />
             <InputText id="acquisition_price" label="Acquisition Price" type="number" step="0.01" min="0" max="999999.99" v-model="form.acquisition_price" :error="form.errors.acquisition_price" />
             <InputDate id="disposition_date" label="Disposition Date" v-model="form.disposition_date" :error="form.errors.disposition_date" />

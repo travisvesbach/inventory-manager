@@ -28,6 +28,9 @@ class AssetsController extends Controller
     public function store(AssetRequest $request) {
         $asset = new Asset;
         $asset->fill($request->validated());
+        if($asset->parent) {
+            $asset->location_id = $asset->parent->location_id;
+        }
         $asset->save();
 
         return redirect($asset->path())->with(['flash_message' => $asset->name . ' created', 'flash_status' => 'success']);
@@ -48,7 +51,16 @@ class AssetsController extends Controller
 
     public function update(AssetRequest $request, Asset $asset) {
         $asset->update($request->validated());
+        if($asset->parent) {
+            $asset->location_id = $asset->parent->location_id;
+        }
         $asset->save();
+        if($asset->children) {
+            foreach($asset->allChildren() as $child) {
+                $child->location_id = $asset->location_id;
+                $child->save();
+            }
+        }
 
         return redirect($asset->path())->with(['flash_message' => $asset->name . ' updated', 'flash_status' => 'success']);
     }

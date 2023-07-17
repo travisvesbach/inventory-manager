@@ -47,5 +47,6 @@ Route::middleware([
 
     Route::resource('assets', AssetsController::class);
     Route::post('assets/bulk_destroy', [AssetsController::class, 'bulkDestroy'])->name('assets.bulk_destroy');
-    Route::post('assets/{asset}/checkout', [AssetsController::class, 'checkout'])->name('assets.checkout');
+    Route::get('assets/{asset}/checkout', [AssetsController::class, 'checkout'])->name('assets.checkout');
+    Route::get('assets/{asset}/checkin', [AssetsController::class, 'checkin'])->name('assets.checkin');
 });

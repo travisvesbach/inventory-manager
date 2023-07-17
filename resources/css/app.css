@@ -117,7 +117,7 @@ dark_secondary_ring             - indigo-400
 }
 
 .vs--disabled .vs__clear, .vs--disabled .vs__dropdown-toggle, .vs--disabled .vs__open-indicator, .vs--disabled .vs__search, .vs--disabled .vs__selected {
-    @apply bg-zinc-900 !important;
+    @apply dark:bg-zinc-900 !important;
 }
 
 .vs__dropdown-menu {
@@ -131,7 +131,7 @@ input[type=number] {
 }
 
 input[type=checkbox] {
-    @apply h-5 w-5 cursor-pointer;
+    @apply h-6 w-6 cursor-pointer;
     @apply dark:text-zinc-700 dark:hover:text-zinc-700 dark:hover:bg-purple-600;
 }
 

@@ -256,103 +256,117 @@
             </div>
         </div>
         <div class="w-full flex">
-            <div class="w-full flex overflow-x-scroll">
-            <table class="w-full mt-2 overflow-x-scroll">
-                <thead>
-                    <tr class="h-10 border-b-2 border-color" v-if="headers">
-                        <th class="flex" v-if="actions">
-                            <!-- dropdown -->
-                            <JetDropdown align="left" width="48" class="sticky">
-                                <template #trigger>
-                                    <button class="ml-auto flex link link-color">
-                                        <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </template>
+            <!-- <div class="w-full flex overflow-x-scroll"> -->
+                <table class="w-full mt-2 overflow-x-scroll">
+                    <thead>
+                        <tr class="h-10 border-b-2 border-color" v-if="headers">
+                            <th class="flex" v-if="actions">
+                                <!-- dropdown -->
+                                <JetDropdown align="left" width="48" class="sticky">
+                                    <template #trigger>
+                                        <button class="ml-auto flex link link-color">
+                                            <svg class="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </template>
 
-                                <template #content>
-                                    <div class="px-4 py-2 text-sm">
-                                        <InputCheckbox id="select-page" class="mt-0" :label="'Select all on page ('+ paginated_data.length +')'" @click="toggleSelectPage"/>
-                                    </div>
-                                    <div class="px-4 py-2 text-sm">
-                                        <InputCheckbox id="select-all" class="mt-0" :label="'Select all matching ('+ filtered.length +')'" @click="toggleSelectAll"/>
-                                    </div>
-                                </template>
-                            </JetDropdown>
+                                    <template #content>
+                                        <div class="px-4 py-2 text-sm">
+                                            <InputCheckbox id="select-page" class="mt-0" :label="'Select all on page ('+ paginated_data.length +')'" @click="toggleSelectPage"/>
+                                        </div>
+                                        <div class="px-4 py-2 text-sm">
+                                            <InputCheckbox id="select-all" class="mt-0" :label="'Select all matching ('+ filtered.length +')'" @click="toggleSelectAll"/>
+                                        </div>
+                                    </template>
+                                </JetDropdown>
 
-                            <button @click="deleting = 'bulk'"
-                                class="btn btn-sm btn-square btn-danger ml-2"
-                                title="Delete"
-                                as="button"
-                                :disabled="selected.length == 0"
-                                v-if="actions && actions.includes('delete')">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </th>
-                        <th class="py-1 px-2 text-left cursor-pointer whitespace-nowrap" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-if="paginated_data.length == 0" class="text-center">
-                        <td colspan="100%">
-                            No results
-                        </td>
-                    </tr>
-                    <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
-                        <td v-if="actions">
-                            <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
-                        </td>
-                        <td class="py-2 px-1 mr2" v-for="header in headers">
-                            <!-- link -->
-                            <Link :href="item.path"
-                                class="text-lg link link-color"
-                                v-html="content(item[header.key])"
-                                v-if="header.format == 'link' && item[header.key]"/>
-                            <!-- obj_link -->
-                            <Link :href="item[header.key].path"
-                                class="text-lg link link-color"
-                                v-html="content(item[header.key][header.subkey])"
-                                v-else-if="header.format == 'obj_link' && item[header.key] && item[header.key][header.subkey]"/>
-                            <!-- icon -->
-                            <i :class="item[header.key]"
-                                v-else-if="header.format == 'icon' && item[header.key]"/>
-                            <!-- boolean -->
-                            <span class="text-lg"
-                                v-html="content(formatBoolean(item[header.key], header))"
-                                v-else-if="header.format == 'boolean'"/>
-                            <!-- count -->
-                            <span class="text-lg"
-                                v-html="content(item[header.key])"
-                                v-else-if="header.format == 'count'"/>
-                            <!-- text -->
-                            <span class="text-lg"
-                                v-html="content(item[header.key])"
-                                v-else/>
-                        </td>
+                                <button @click="deleting = 'bulk'"
+                                    class="btn btn-sm btn-square btn-danger ml-2"
+                                    title="Delete"
+                                    as="button"
+                                    :disabled="selected.length == 0"
+                                    v-if="actions && actions.includes('delete')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </th>
+                            <th class="py-1 px-2 text-left cursor-pointer whitespace-nowrap" @click="sortBy(header.key)" v-for="header in headers">{{ header.label }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="paginated_data.length == 0" class="text-center">
+                            <td colspan="100%">
+                                No results
+                            </td>
+                        </tr>
+                        <tr class="border-b-2 border-color" v-for="item in paginated_data" v-else>
+                            <td v-if="actions">
+                                <JetCheckbox :value="item.id.toString()" :checked="selected.includes(item.id)" @click="toggleSelected(item)"/>
+                            </td>
+                            <td class="py-2 px-1 mr2" v-for="header in headers">
+                                <!-- link -->
+                                <Link :href="item.path"
+                                    class="text-lg link link-color"
+                                    v-html="content(item[header.key])"
+                                    v-if="header.format == 'link' && item[header.key]"/>
+                                <!-- obj_link -->
+                                <Link :href="item[header.key].path"
+                                    class="text-lg link link-color"
+                                    v-html="content(item[header.key][header.subkey])"
+                                    v-else-if="header.format == 'obj_link' && item[header.key] && item[header.key][header.subkey]"/>
+                                <!-- icon -->
+                                <i :class="item[header.key]"
+                                    v-else-if="header.format == 'icon' && item[header.key]"/>
+                                <!-- boolean -->
+                                <span class="text-lg"
+                                    v-html="content(formatBoolean(item[header.key], header))"
+                                    v-else-if="header.format == 'boolean'"/>
+                                <!-- count -->
+                                <span class="text-lg"
+                                    v-html="content(item[header.key])"
+                                    v-else-if="header.format == 'count'"/>
+                                <!-- text -->
+                                <span class="text-lg"
+                                    v-html="content(item[header.key])"
+                                    v-else/>
+                            </td>
 
-                    </tr>
-                </tbody>
-            </table>
-            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            <!-- </div> -->
             <table class="mt-2" v-if="paginated_data.length > 0">
                 <thead>
                     <tr class="border-b-2 border-color h-10" v-if="headers">
-                        <th></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="border-b-2 border-color" v-for="item in paginated_data">
                         <td class="py-2 px-1 flex justify-end sticky right-2" v-if="actions">
+                            <Link :href="route(route_slug + '.checkout', item.id)"
+                                class="btn btn-sm btn-secondary mx-1"
+                                title="Checkout"
+                                as="button"
+                                v-if="actions.includes('checkout') && !item.parent_id">
+                                Checkout
+                            </Link>
+                            <Link :href="route(route_slug + '.checkin', item.id)"
+                                class="btn btn-sm btn-secondary mx-1"
+                                title="Checkin"
+                                as="button"
+                                v-if="actions.includes('checkout') && item.parent_id">
+                                Checkin
+                            </Link>
                             <Link :href="route(route_slug + '.edit', item.id)"
-                                class="btn btn-sm btn-square btn-primary"
+                                class="btn btn-sm btn-square btn-primary mx-1"
                                 title="Edit"
                                 as="button"
                                 v-if="actions.includes('edit')">
                                 <i class="fa-solid fa-pencil text-lg"></i>
                             </Link>
                             <button @click="deleting = item"
-                                class="btn btn-sm btn-square btn-danger ml-2"
+                                class="btn btn-sm btn-square btn-danger mx-1"
                                 title="Delete"
                                 as="button"
                                 v-if="actions.includes('delete')">

@@ -65,6 +65,7 @@
                 },
             ]"
             :data="all_assets && showing_all ? all_assets : assets"
+            :actions="['edit', 'delete', 'checkout']"
             route_slug="assets"
             :hierarchy_root="hierarchy_root"
         />
